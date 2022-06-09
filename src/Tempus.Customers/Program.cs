@@ -1,14 +1,21 @@
+using System.Reflection;
+
+using Microsoft.EntityFrameworkCore;
+using Tempus.Common;
+
+using Tempus.Customers.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CustomerContext>();
+
+builder.Services.AddApis();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-
-app.MapGet("/api/customers/", () =>
-{
-  return new[] { new { id = 1, name = "Acme Cannon Company" } };
-});
+app.MapApis();
 
 app.Run();
 
