@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.EntityFrameworkCore;
-
-using Tempus.Common;
-using Tempus.Customers.Data;
+﻿using AutoMapper;
 
 namespace Tempus.Customers.Apis;
 
 public class CustomerApi : IApi
 {
-  public void Register(WebApplication app)
+  private readonly ILogger<CustomerApi> _logger;
+  private readonly IMapper _mapper;
+
+  public CustomerApi(ILogger<CustomerApi> logger, IMapper mapper)
   {
-    app.MapGet("/api/customers/", GetCustomer);
+    _logger = logger;
+    _mapper = mapper;
   }
 
-  public async Task<IResult> GetCustomer(CustomerContext ctx)
+  public void Register(WebApplication app)
+  {
+    app.MapGet("/api/customers/", GetCustomers);
+    app.MapGet("/api/customers/{id:int}", GetCustomer);
+    app.MapPost("/api/customers/", CreateCustomer);
+    app.MapPut("/api/customers/{id:int}", UpdateCustomer);
+    app.MapDelete("/api/customers/{id:int}", DeleteCustomer);
+  }
+
+  public async Task<IResult> GetCustomers(CustomerContext ctx)
   {
     var results = await ctx.Customers
       .Include(c => c.Location)
@@ -28,6 +32,86 @@ public class CustomerApi : IApi
 
     if (results is null || results.Count() == 0) return Results.NotFound();
     return Results.Ok(results);
+  }
+
+  public async Task<IResult> GetCustomer(CustomerContext ctx, int id)
+  {
+    var result = await LoadCustomer(ctx, id);
+
+    if (result is null) return Results.NotFound();
+    return Results.Ok(result);
+  }
+
+  async Task<Customer> LoadCustomer(CustomerContext ctx, int id)
+  {
+    return await ctx.Customers
+      .Include(c => c.Location)
+      .Include(c => c.Contacts)
+      .Where(c => c.Id == id)
+      .FirstAsync();
+  }
+
+  public async Task<IResult> CreateCustomer(CustomerContext ctx, Customer customer)
+  {
+    try
+    {
+      ctx.Add(customer);
+
+      if (await ctx.SaveChangesAsync() > 0)
+      {
+        return Results.Created(@"/api/customers/{customer.Id}", customer);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError($"Failed to create customer: {ex}");
+    }
+
+    return Results.BadRequest();
+  }
+
+  public async Task<IResult> UpdateCustomer(CustomerContext ctx, int id, Customer customer)
+  {
+    try
+    {
+      var old = await LoadCustomer(ctx, id);
+      if (old is null) return Results.NotFound();
+
+      _mapper.Map(customer, old);
+
+      if (await ctx.SaveChangesAsync() > 0)
+      {
+        return Results.Ok(old);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError($"Failed to update customer: {ex}");
+    }
+
+    return Results.BadRequest();
+  }
+
+  public async Task<IResult> DeleteCustomer(CustomerContext ctx, int id)
+  {
+    try
+    {
+      var old = await LoadCustomer(ctx, id);
+      if (old is null) return Results.NotFound();
+
+      ctx.Remove(old);
+
+      if (await ctx.SaveChangesAsync() > 0)
+      {
+        return Results.Ok();
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError($"Failed to update customer: {ex}");
+    }
+
+    return Results.BadRequest();
   }
 
 }

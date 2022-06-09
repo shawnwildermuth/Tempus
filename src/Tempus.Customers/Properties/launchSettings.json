@@ -11,11 +11,11 @@
   "profiles": {
     "Tempus.Customers": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/customers",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "hotReloadEnabled": false,
       "applicationUrl": "http://localhost:5011",
       "dotnetRunMessages": true
     },
