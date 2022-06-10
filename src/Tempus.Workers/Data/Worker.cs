@@ -1,13 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tempus.Workers.Data;
 
+[Table("Workers", Schema = "Tempus")]
 public class Worker
 {
   public int Id { get; set; }
   [Required]
   [MaxLength(100)]
   public string UserName { get; set; } = "";
+  [Precision(8,2)]
   public decimal BaseRate { get; set; }
   [MaxLength(50)]
   public string? FirstName { get; set; }

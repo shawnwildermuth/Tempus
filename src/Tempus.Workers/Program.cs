@@ -1,5 +1,3 @@
-using Tempus.Workers.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<WorkerContext>();

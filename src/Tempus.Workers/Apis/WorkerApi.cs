@@ -30,7 +30,6 @@ public class WorkerApi : IApi
       .OrderBy(c => c.LastName)
       .ToListAsync();
 
-    if (results is null || results.Count() == 0) return Results.NotFound();
     return Results.Ok(results);
   }
 

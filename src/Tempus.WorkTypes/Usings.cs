@@ -8,3 +8,6 @@ global using System.Reflection;
 global using AutoMapper;
 
 global using Tempus.Common;
+global using Tempus.WorkTypes.Data;
+global using Tempus.WorkTypes.Apis;
+

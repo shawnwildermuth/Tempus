@@ -30,7 +30,6 @@ public class CustomerApi : IApi
       .OrderBy(c => c.CompanyName)
       .ToListAsync();
 
-    if (results is null || results.Count() == 0) return Results.NotFound();
     return Results.Ok(results);
   }
 
