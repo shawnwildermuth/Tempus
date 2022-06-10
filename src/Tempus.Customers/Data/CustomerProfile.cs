@@ -12,7 +12,10 @@ public class CustomerProfile : Profile
 {
   public CustomerProfile()
   {
-    this.CreateMap<Customer, Customer>().ReverseMap();
+    this.CreateMap<Customer, Customer>()
+      .ForMember(d => d.Contacts,
+                 opt => opt.Ignore())
+      .ReverseMap();
     this.CreateMap<Location, Location>().ReverseMap();
     this.CreateMap<Contact, Contact>().ReverseMap();
   }

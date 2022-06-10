@@ -41,13 +41,13 @@ public class CustomerApi : IApi
     return Results.Ok(result);
   }
 
-  async Task<Customer> LoadCustomer(CustomerContext ctx, int id)
+  async Task<Customer?> LoadCustomer(CustomerContext ctx, int id)
   {
     return await ctx.Customers
       .Include(c => c.Location)
       .Include(c => c.Contacts)
       .Where(c => c.Id == id)
-      .FirstAsync();
+      .FirstOrDefaultAsync();
   }
 
   public async Task<IResult> CreateCustomer(CustomerContext ctx, Customer customer)
@@ -77,6 +77,18 @@ public class CustomerApi : IApi
       if (old is null) return Results.NotFound();
 
       _mapper.Map(customer, old);
+      foreach (var contact in customer.Contacts)
+      {
+        var oldContact = old.Contacts.FirstOrDefault(c => c.Id == contact.Id);
+        if (oldContact is not null)
+        {
+          _mapper.Map(contact, oldContact);
+        }
+        else
+        {
+          old.Contacts.Add(contact);
+        }
+      }
 
       if (await ctx.SaveChangesAsync() > 0)
       {

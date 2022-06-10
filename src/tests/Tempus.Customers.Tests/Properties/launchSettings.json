@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Tempus.Customers.Tests": {
+      "commandName": "Project",
+      "commandLineArgs": "test"
+    }
+  }
+}

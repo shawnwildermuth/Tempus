@@ -14,7 +14,7 @@ public static class Extensions
   public static void AddApis(this IServiceCollection services, 
     Assembly? containerAssembly = null)
   {
-    if (containerAssembly is null) containerAssembly = Assembly.GetEntryAssembly()!;
+    if (containerAssembly is null) containerAssembly = Assembly.GetCallingAssembly()!;
     var apis = containerAssembly.GetTypes().AsQueryable().Where(t => t.GetInterfaces().Contains(typeof(IApi)));
     foreach (var api in apis) services.AddTransient(typeof(IApi), api);
   }

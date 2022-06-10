@@ -13,3 +13,5 @@ app.MapApis();
 
 app.Run();
 
+public partial class Program { }
+
