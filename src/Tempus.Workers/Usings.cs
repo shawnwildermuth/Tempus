@@ -8,5 +8,7 @@ global using System.Reflection;
 global using AutoMapper;
 
 global using Tempus.Common;
-global using Tempus.Customers.Data;
-global using Tempus.Customers.Apis;
+global using Tempus.Workers.Apis;
+global using Tempus.Workers.Data;
+
+

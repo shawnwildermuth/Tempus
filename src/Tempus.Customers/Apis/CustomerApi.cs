@@ -59,7 +59,7 @@ public class CustomerApi : IApi
 
       if (await ctx.SaveChangesAsync() > 0)
       {
-        return Results.Created(@"/api/customers/{customer.Id}", customer);
+        return Results.Created($"/api/customers/{customer.Id}", customer);
       }
     }
     catch (Exception ex)
@@ -108,7 +108,7 @@ public class CustomerApi : IApi
     }
     catch (Exception ex)
     {
-      _logger.LogError($"Failed to update customer: {ex}");
+      _logger.LogError($"Failed to delete customer: {ex}");
     }
 
     return Results.BadRequest();
