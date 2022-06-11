@@ -4,15 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Tempus.Common;
 
-public class BaseApiTests<T,C> : IDisposable where T : class where C : DbContext
+public class BaseApiTests<T, C> : IDisposable where T : class where C : DbContext
 {
   protected readonly WebApplicationFactory<T> _application;
   protected readonly HttpClient _client;
 
   protected BaseApiTests()
   {
-    _application = new WebApplicationFactory<T>();
-    _application.WithWebHostBuilder(bldr =>
+    _application = new WebApplicationFactory<T>()
+    .WithWebHostBuilder(bldr =>
     {
       bldr.ConfigureServices(c =>
       {
