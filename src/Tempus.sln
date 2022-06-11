@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9845221D-73E6-46B1-92C0-A026C95B1792}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 		global.json = global.json
 	EndProjectSection
 EndProject
@@ -31,9 +32,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2B806C78
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{47C27BE8-F58C-4717-A613-0010590A220B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.Customers.Tests", "tests\Tempus.Customers.Tests\Tempus.Customers.Tests.csproj", "{94D80B5B-E48F-4BCD-A7F1-FE2E885FD12B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Customers.Tests", "tests\Tempus.Customers.Tests\Tempus.Customers.Tests.csproj", "{94D80B5B-E48F-4BCD-A7F1-FE2E885FD12B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.TimeBilling.Tests", "tests\Tempus.TimeBilling.Tests\Tempus.TimeBilling.Tests.csproj", "{B4347D03-4FD8-4E0A-B645-4E86D1C40AD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.TimeBilling.Tests", "tests\Tempus.TimeBilling.Tests\Tempus.TimeBilling.Tests.csproj", "{B4347D03-4FD8-4E0A-B645-4E86D1C40AD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
