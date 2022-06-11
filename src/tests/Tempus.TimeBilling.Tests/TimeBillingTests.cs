@@ -8,16 +8,12 @@ using Tempus.TimeBilling.Data;
 
 namespace Tempus.TimeBilling.Tests;
 
-public class TimeBillingTests : BaseApiTests<Program>
+public class TimeBillingTests : BaseApiTests<Program, TimeBillingContext>
 {
   private readonly TimeBill _newTimeBill;
 
   public TimeBillingTests() : base()
   {
-    using var scope = _application.Services.CreateScope();
-    var ctx = scope.ServiceProvider.GetService<TimeBillingContext>()!;
-    ctx.Database.EnsureDeleted();
-    ctx.Database.EnsureCreated();
 
     _newTimeBill = new TimeBill()
     {

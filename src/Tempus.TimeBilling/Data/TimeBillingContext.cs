@@ -19,6 +19,7 @@ public class TimeBillingContext : DbContext
     _config = config;
   }
 
+
   public DbSet<TimeBill> TimeBills => Set<TimeBill>();
 
   protected override void OnConfiguring(DbContextOptionsBuilder builder)

@@ -7,17 +7,12 @@ using Tempus.Customers.Data;
 
 namespace Tempus.Customers.Tests;
 
-public class CustomerTests : BaseApiTests<Program>
+public class CustomerTests : BaseApiTests<Program, CustomerContext>
 {
   private readonly Customer _newCustomer;
 
   public CustomerTests() : base()
   {
-    using var scope = _application.Services.CreateScope();
-    var ctx = scope.ServiceProvider.GetService<CustomerContext>()!;
-    ctx.Database.EnsureDeleted();
-    ctx.Database.EnsureCreated();
-
     _newCustomer = new Customer()
     {
       CompanyName = "Acme Tooling",

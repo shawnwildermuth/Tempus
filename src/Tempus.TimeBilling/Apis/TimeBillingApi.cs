@@ -37,7 +37,7 @@ public class TimeBillingApi : IApi
     return Results.Ok(result);
   }
 
-  async Task<TimeBill> LoadTimeBill(TimeBillingContext ctx, int id)
+  async Task<TimeBill?> LoadTimeBill(TimeBillingContext ctx, int id)
   {
     return await ctx.TimeBills
       .Where(c => c.Id == id)
