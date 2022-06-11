@@ -3,12 +3,10 @@
 public class TimeBillingApi : IApi
 {
   private readonly ILogger<TimeBillingApi> _logger;
-  private readonly IMapper _mapper;
 
-  public TimeBillingApi(ILogger<TimeBillingApi> logger, IMapper mapper)
+  public TimeBillingApi(ILogger<TimeBillingApi> logger)
   {
     _logger = logger;
-    _mapper = mapper;
   }
 
   public void Register(WebApplication app)
@@ -70,7 +68,7 @@ public class TimeBillingApi : IApi
       var old = await LoadTimeBill(ctx, id);
       if (old is null) return Results.NotFound();
 
-      _mapper.Map(timeBill, old);
+      ShallowCopier.Copy(timeBill, old);
 
       if (await ctx.SaveChangesAsync() > 0)
       {

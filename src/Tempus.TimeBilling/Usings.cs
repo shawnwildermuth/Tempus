@@ -5,7 +5,6 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using Microsoft.EntityFrameworkCore;
 global using System.Reflection;
-global using AutoMapper;
 
 global using Tempus.Common;
 global using Tempus.TimeBilling.Data;
