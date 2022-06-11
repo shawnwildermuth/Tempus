@@ -1,8 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using Tempus.Common;
 using Tempus.TimeBilling.Data;
 

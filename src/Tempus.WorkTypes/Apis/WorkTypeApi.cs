@@ -3,12 +3,10 @@
 public class WorkTypeApi : IApi
 {
   private readonly ILogger<WorkTypeApi> _logger;
-  private readonly IMapper _mapper;
 
-  public WorkTypeApi(ILogger<WorkTypeApi> logger, IMapper mapper)
+  public WorkTypeApi(ILogger<WorkTypeApi> logger)
   {
     _logger = logger;
-    _mapper = mapper;
   }
 
   public void Register(WebApplication app)
@@ -37,11 +35,11 @@ public class WorkTypeApi : IApi
     return Results.Ok(result);
   }
 
-  async Task<WorkType> LoadWorkType(WorkTypeContext ctx, int id)
+  async Task<WorkType?> LoadWorkType(WorkTypeContext ctx, int id)
   {
     return await ctx.WorkTypes
       .Where(c => c.Id == id)
-      .FirstAsync();
+      .FirstOrDefaultAsync();
   }
 
   public async Task<IResult> CreateWorkType(WorkTypeContext ctx, WorkType worker)
@@ -70,7 +68,7 @@ public class WorkTypeApi : IApi
       var old = await LoadWorkType(ctx, id);
       if (old is null) return Results.NotFound();
 
-      _mapper.Map(worker, old);
+      ShallowCopier.Copy(worker, old);
 
       if (await ctx.SaveChangesAsync() > 0)
       {
