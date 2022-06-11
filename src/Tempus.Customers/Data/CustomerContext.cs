@@ -2,7 +2,8 @@
 
 public class CustomerContext : DbContext
 {
-  public CustomerContext() { }
+  public CustomerContext(DbContextOptions<CustomerContext> opt) : base(opt)
+  { }
 
   public DbSet<Customer> Customers => Set<Customer>();
 

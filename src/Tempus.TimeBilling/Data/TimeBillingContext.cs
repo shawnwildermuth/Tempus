@@ -10,7 +10,9 @@ namespace Tempus.TimeBilling.Data;
 
 public class TimeBillingContext : DbContext
 {
-  public TimeBillingContext() { }
+  public TimeBillingContext(DbContextOptions<TimeBillingContext> opt) : base(opt) 
+  { 
+  }
 
 
   public DbSet<TimeBill> TimeBills => Set<TimeBill>();
