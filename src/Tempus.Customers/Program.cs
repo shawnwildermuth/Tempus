@@ -2,7 +2,8 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CustomerContext>();
+builder.Services.AddDbContext<CustomerContext>(
+  opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("CustomerDb")));
 
 builder.Services.AddApis();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
