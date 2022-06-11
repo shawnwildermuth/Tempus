@@ -17,15 +17,15 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
     {
       CompanyName = "Acme Tooling",
       CompanyPhone = "404-555-1212",
-      //Contacts = new List<Contact>()
-      //{
-      //  new Contact()
-      //  {
-      //    FirstName = "Joe",
-      //    LastName = "Smith",
-      //    Email = "joe@aol.com"
-      //  }
-      //},
+      Contacts = new List<Contact>()
+      {
+        new Contact()
+        {
+          FirstName = "Joe",
+          LastName = "Smith",
+          Email = "joe@aol.com"
+        }
+      },
       Location = new Location()
       {
         LineOne = "123 Main Street",
@@ -69,11 +69,13 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
     Assert.NotNull(created);
 
     created!.CompanyName = "Acme Tooling, Inc.";
+    created!.Location.LineTwo = "Suite 500";
     var updating = await _client.PutAsJsonAsync($"/api/customers/{created.Id}", created);
 
     var updated = await updating.Content.ReadFromJsonAsync<Customer>();
 
     Assert.Equal("Acme Tooling, Inc.", updated?.CompanyName);
+    Assert.Equal("Suite 500", updated?.Location.LineTwo);
   }
 
   [Fact]

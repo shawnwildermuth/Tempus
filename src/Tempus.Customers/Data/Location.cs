@@ -7,6 +7,7 @@ namespace Tempus.Customers.Data;
 public class Location
 {
   public int Id { get; set; }
+  public int CustomerId { get; set; }
   [Required]
   [MaxLength(255)]
   public string LineOne { get; set; } = "";

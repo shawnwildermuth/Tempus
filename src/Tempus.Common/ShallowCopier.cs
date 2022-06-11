@@ -10,15 +10,15 @@ public static class ShallowCopier
   /// <param name="source">The source.</param>
   /// <param name="destination">The destination.</param>
   /// <returns>Success</returns>
-  public static bool Copy<T>(T source, T destination)
+  public static bool Copy(object source, object destination)
   {
     try
     {
-      var theType = typeof(T);
+      var theType = source.GetType();
       var props = theType.GetProperties();
       foreach (var prop in props)
       {
-        var propType = prop.GetType();
+        var propType = prop.PropertyType;
         if (!prop.CanRead)
         {
           continue;
@@ -39,11 +39,36 @@ public static class ShallowCopier
         {
           continue;
         }
-        if (propType.IsAssignableFrom(typeof(IEnumerable)))
+        if (typeof(IEnumerable).IsAssignableFrom(propType) && propType.IsGenericType)
         {
           continue;
         }
-        prop.SetValue(destination, prop.GetValue(source, null), null);
+        var sourceValue = prop.GetValue(source, null);
+        var destValue = prop.GetValue(destination, null);
+        if (propType.GetConstructor(new Type[] { }) is not null)
+        {
+          // Class
+          if ((sourceValue is null || destValue is null))
+          {
+            prop.SetValue(destination, sourceValue, null);
+          }
+          else
+          {
+            if (!Copy(sourceValue!, destValue!))
+            {
+              return false;
+            };
+          }
+
+        }
+        else
+        {
+          if ((sourceValue is null || destValue is null) 
+            || !(sourceValue.Equals(destValue)))
+          {
+              prop.SetValue(destination, prop.GetValue(source, null), null);
+          }
+        }
       }
 
       return true;

@@ -1,16 +1,12 @@
-﻿using AutoMapper;
-
-namespace Tempus.Customers.Apis;
+﻿namespace Tempus.Customers.Apis;
 
 public class CustomerApi : IApi
 {
   private readonly ILogger<CustomerApi> _logger;
-  private readonly IMapper _mapper;
-
-  public CustomerApi(ILogger<CustomerApi> logger, IMapper mapper)
+  
+  public CustomerApi(ILogger<CustomerApi> logger)
   {
     _logger = logger;
-    _mapper = mapper;
   }
 
   public void Register(WebApplication app)
@@ -76,13 +72,17 @@ public class CustomerApi : IApi
       var old = await LoadCustomer(ctx, id);
       if (old is null) return Results.NotFound();
 
-      _mapper.Map(customer, old);
+      ShallowCopier.Copy(customer, old);
+
       foreach (var contact in customer.Contacts)
       {
         var oldContact = old.Contacts.FirstOrDefault(c => c.Id == contact.Id);
         if (oldContact is not null)
         {
-          _mapper.Map(contact, oldContact);
+          if (!ShallowCopier.Copy(contact, oldContact))
+          {
+            throw new InvalidOperationException("Failed to copy contacts");
+          }  
         }
         else
         {
