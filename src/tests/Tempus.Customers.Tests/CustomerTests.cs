@@ -17,15 +17,15 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
     {
       CompanyName = "Acme Tooling",
       CompanyPhone = "404-555-1212",
-      Contacts = new List<Contact>()
-      {
-        new Contact()
-        {
-          FirstName = "Joe",
-          LastName = "Smith",
-          Email = "joe@aol.com"
-        }
-      },
+      //Contacts = new List<Contact>()
+      //{
+      //  new Contact()
+      //  {
+      //    FirstName = "Joe",
+      //    LastName = "Smith",
+      //    Email = "joe@aol.com"
+      //  }
+      //},
       Location = new Location()
       {
         LineOne = "123 Main Street",
@@ -55,7 +55,7 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
     Assert.NotNull(updated);
     Assert.Equal("Acme Tooling", updated?.CompanyName);
     Assert.Equal("404-555-1212", updated?.CompanyPhone);
-    Assert.Equal("Joe", updated?.Contacts.First().FirstName);
+    //Assert.Equal("Joe", updated?.Contacts.First().FirstName);
     Assert.Equal("123 Main Street", updated?.Location.LineOne);
   }
 
