@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-
+﻿
 using Tempus.Workers.Data;
 
 namespace Tempus.Workers.Apis;
@@ -7,12 +6,10 @@ namespace Tempus.Workers.Apis;
 public class WorkerApi : IApi
 {
   private readonly ILogger<WorkerApi> _logger;
-  private readonly IMapper _mapper;
 
-  public WorkerApi(ILogger<WorkerApi> logger, IMapper mapper)
+  public WorkerApi(ILogger<WorkerApi> logger)
   {
     _logger = logger;
-    _mapper = mapper;
   }
 
   public void Register(WebApplication app)
@@ -41,11 +38,11 @@ public class WorkerApi : IApi
     return Results.Ok(result);
   }
 
-  async Task<Worker> LoadWorker(WorkerContext ctx, int id)
+  async Task<Worker?> LoadWorker(WorkerContext ctx, int id)
   {
     return await ctx.Workers
       .Where(c => c.Id == id)
-      .FirstAsync();
+      .FirstOrDefaultAsync();
   }
 
   public async Task<IResult> CreateWorker(WorkerContext ctx, Worker worker)
@@ -74,7 +71,7 @@ public class WorkerApi : IApi
       var old = await LoadWorker(ctx, id);
       if (old is null) return Results.NotFound();
 
-      _mapper.Map(worker, old);
+      ShallowCopier.Copy(worker, old);
 
       if (await ctx.SaveChangesAsync() > 0)
       {

@@ -10,18 +10,10 @@ namespace Tempus.Workers.Data;
 
 public class WorkerContext : DbContext
 {
-  private readonly ILogger<WorkerContext> _logger;
-  private readonly IConfiguration _config;
-
-  public WorkerContext(ILogger<WorkerContext> logger, IConfiguration config)
+  public WorkerContext(DbContextOptions<WorkerContext> opt) : base(opt)
   {
-    _logger = logger;
-    _config = config;
   }
 
   public DbSet<Worker> Workers => Set<Worker>();
-
-  protected override void OnConfiguring(DbContextOptionsBuilder builder)
-    => builder.UseSqlServer(_config.GetConnectionString("WorkerDb"));
   
 }
