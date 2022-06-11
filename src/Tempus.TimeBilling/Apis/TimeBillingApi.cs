@@ -13,14 +13,14 @@ public class TimeBillingApi : IApi
 
   public void Register(WebApplication app)
   {
-    app.MapGet("/api/timebills/", GetWorkTypes);
-    app.MapGet("/api/timebills/{id:int}", GetWorkType);
-    app.MapPost("/api/timebills/", CreateWorkType);
-    app.MapPut("/api/timebills/{id:int}", UpdateWorkType);
-    app.MapDelete("/api/timebills/{id:int}", DeleteWorkType);
+    app.MapGet("/api/timebills/", GetTimeBills);
+    app.MapGet("/api/timebills/{id:int}", GetTimeBill);
+    app.MapPost("/api/timebills/", CreateTimeBill);
+    app.MapPut("/api/timebills/{id:int}", UpdateTimeBill);
+    app.MapDelete("/api/timebills/{id:int}", DeleteTimeBill);
   }
 
-  public async Task<IResult> GetWorkTypes(TimeBillingContext ctx)
+  public async Task<IResult> GetTimeBills(TimeBillingContext ctx)
   {
     var results = await ctx.TimeBills
       .OrderBy(c => c.WorkerId)
@@ -29,22 +29,22 @@ public class TimeBillingApi : IApi
     return Results.Ok(results);
   }
 
-  public async Task<IResult> GetWorkType(TimeBillingContext ctx, int id)
+  public async Task<IResult> GetTimeBill(TimeBillingContext ctx, int id)
   {
-    var result = await LoadWorkType(ctx, id);
+    var result = await LoadTimeBill(ctx, id);
 
     if (result is null) return Results.NotFound();
     return Results.Ok(result);
   }
 
-  async Task<TimeBill> LoadWorkType(TimeBillingContext ctx, int id)
+  async Task<TimeBill> LoadTimeBill(TimeBillingContext ctx, int id)
   {
     return await ctx.TimeBills
       .Where(c => c.Id == id)
-      .FirstAsync();
+      .FirstOrDefaultAsync();
   }
 
-  public async Task<IResult> CreateWorkType(TimeBillingContext ctx, TimeBill timeBill)
+  public async Task<IResult> CreateTimeBill(TimeBillingContext ctx, TimeBill timeBill)
   {
     try
     {
@@ -63,11 +63,11 @@ public class TimeBillingApi : IApi
     return Results.BadRequest();
   }
 
-  public async Task<IResult> UpdateWorkType(TimeBillingContext ctx, int id, TimeBill timeBill)
+  public async Task<IResult> UpdateTimeBill(TimeBillingContext ctx, int id, TimeBill timeBill)
   {
     try
     {
-      var old = await LoadWorkType(ctx, id);
+      var old = await LoadTimeBill(ctx, id);
       if (old is null) return Results.NotFound();
 
       _mapper.Map(timeBill, old);
@@ -85,11 +85,11 @@ public class TimeBillingApi : IApi
     return Results.BadRequest();
   }
 
-  public async Task<IResult> DeleteWorkType(TimeBillingContext ctx, int id)
+  public async Task<IResult> DeleteTimeBill(TimeBillingContext ctx, int id)
   {
     try
     {
-      var old = await LoadWorkType(ctx, id);
+      var old = await LoadTimeBill(ctx, id);
       if (old is null) return Results.NotFound();
 
       ctx.Remove(old);
