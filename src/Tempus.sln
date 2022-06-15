@@ -36,9 +36,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Customers.Tests", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.TimeBilling.Tests", "tests\Tempus.TimeBilling.Tests\Tempus.TimeBilling.Tests.csproj", "{B4347D03-4FD8-4E0A-B645-4E86D1C40AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.Workers.Tests", "tests\Tempus.Workers.Tests\Tempus.Workers.Tests.csproj", "{D272CF3B-3B5D-40CB-BA58-E93BBC0ED505}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Workers.Tests", "tests\Tempus.Workers.Tests\Tempus.Workers.Tests.csproj", "{D272CF3B-3B5D-40CB-BA58-E93BBC0ED505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempus.WorkTypes.Tests", "tests\Tempus.WorkTypes.Tests\Tempus.WorkTypes.Tests.csproj", "{A4D81AE1-E479-48BE-861B-867349D1E610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.WorkTypes.Tests", "tests\Tempus.WorkTypes.Tests\Tempus.WorkTypes.Tests.csproj", "{A4D81AE1-E479-48BE-861B-867349D1E610}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
