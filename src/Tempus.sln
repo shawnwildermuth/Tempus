@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9845221D-73E6-46B1-92C0-A026C95B1792}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
 		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 		global.json = global.json
 	EndProjectSection
@@ -39,6 +40,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Workers.Tests", "tests\Tempus.Workers.Tests\Tempus.Workers.Tests.csproj", "{D272CF3B-3B5D-40CB-BA58-E93BBC0ED505}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.WorkTypes.Tests", "tests\Tempus.WorkTypes.Tests\Tempus.WorkTypes.Tests.csproj", "{A4D81AE1-E479-48BE-861B-867349D1E610}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{085AE9D3-F719-4B64-8D29-024976B9639B}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Tempus.App", "Tempus.App\Tempus.App.esproj", "{96AD4C6D-E4C0-4447-A969-89171394EC54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +103,12 @@ Global
 		{A4D81AE1-E479-48BE-861B-867349D1E610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D81AE1-E479-48BE-861B-867349D1E610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D81AE1-E479-48BE-861B-867349D1E610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AD4C6D-E4C0-4447-A969-89171394EC54}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +125,7 @@ Global
 		{B4347D03-4FD8-4E0A-B645-4E86D1C40AD2} = {2B806C78-0D6A-4BC2-BD33-11C234AA2344}
 		{D272CF3B-3B5D-40CB-BA58-E93BBC0ED505} = {2B806C78-0D6A-4BC2-BD33-11C234AA2344}
 		{A4D81AE1-E479-48BE-861B-867349D1E610} = {2B806C78-0D6A-4BC2-BD33-11C234AA2344}
+		{96AD4C6D-E4C0-4447-A969-89171394EC54} = {085AE9D3-F719-4B64-8D29-024976B9639B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3CA8C0A-509F-4D32-A1C5-33BE79C59EB1}
