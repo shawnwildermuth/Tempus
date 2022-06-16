@@ -27,6 +27,6 @@ jobs:
     - name: Execute All Tests
       uses: azure/powershell@v1
       with:
-        working-directory: ./src/tests
-        inlineScript: foreach ($test in (ls -Recurse *.csproj | % FullName)) { dotnet test $($test) }
+        inlineScript: foreach ($test in (ls -Recurse ./src/tests/*.csproj | % FullName)) { dotnet test $($test) --no-build --verbosity normal }
         azPSVersion: "latest"
+        failOnStandardError: true
