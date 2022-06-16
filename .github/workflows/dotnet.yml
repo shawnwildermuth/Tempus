@@ -26,4 +26,4 @@ jobs:
 
     - name: Execute All Tests
       shell: pwsh
-      run: foreach ($test in (ls -Recurse ./src/tests/*.csproj | % FullName)) { dotnet test $($test) --no-build --verbosity normal }
+      run: foreach ($test in (gci -Recurse "./src/tests/*.csproj" | % FullName)) { dotnet test "$($test)" --no-build --verbosity normal }
