@@ -25,8 +25,5 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Execute All Tests
-      uses: azure/powershell@v1
-      with:
-        inlineScript: foreach ($test in (ls -Recurse ./src/tests/*.csproj | % FullName)) { dotnet test $($test) --no-build --verbosity normal }
-        azPSVersion: "latest"
-        failOnStandardError: true
+      shell: pwsh
+      run: foreach ($test in (ls -Recurse ./src/tests/*.csproj | % FullName)) { dotnet test $($test) --no-build --verbosity normal }
