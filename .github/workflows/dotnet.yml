@@ -23,6 +23,10 @@ jobs:
     - name: Build
       working-directory: ./src
       run: dotnet build --no-restore
-    - name: Test
-      working-directory: ./src/tests
-      run: dotnet test --no-build --verbosity normal
+
+    - name: Execute All Tests
+      uses: azure/powershell@v1
+      with:
+        working-directory: ./src/tests
+        inlineScript: foreach ($test in (ls -Recurse *.csproj | % FullName)) { dotnet test $($test) }
+        azPSVersion: "latest"
