@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.WorkTypes", "Tempus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tempus.Proxy", "Tempus.Proxy\Tempus.Proxy.csproj", "{F8CCB0F3-2688-41D7-B5A9-223657C26F68}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9845221D-73E6-46B1-92C0-A026C95B1792}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{9845221D-73E6-46B1-92C0-A026C95B1792}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		..\.gitignore = ..\.gitignore
