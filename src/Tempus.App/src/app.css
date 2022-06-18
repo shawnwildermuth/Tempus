@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+  h1, h2, h3 {
+    @apply font-bold;
+  }
+
+  h1 { @apply text-2xl; }
+  h2 { @apply text-xl; }
+  h3, h4 { @apply text-lg; }
+}
+
+a.active { @apply font-bold; }
+
+.menu { 
+  @apply text-white drop-shadow-md p-1 hover:text-orange-300 border-r last:border-0 px-2;
+}

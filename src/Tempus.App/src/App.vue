@@ -7,23 +7,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="flex justify-between text-orange-300 p-1">
-    <div class="text-2xl font-bold"><fa icon="fa-solid fa-stopwatch"></fa> Tempus</div>
-    <div class="flex justify-end p-2">
-      <router-link
-        to="/"
-        class="text-white drop-shadow-md p-1 hover:text-orange-200"
-        >Home</router-link
-      >
-      <router-link
-        to="/workers"
-        class="text-white drop-shadow-md p-1 hover:text-orange-200"
-        >Workers</router-link
-      >
-    </div>
-  </header>
-  <div class="container mx-auto bg-slate-100 p-2">
-    <section class="min-h-screen">
+  <div class="container mx-auto bg-slate-100">
+    <header class="flex justify-between text-orange-300 p-1 bg-slate-800">
+      <router-link to="/" class=" self-center"
+        ><div class="text-2xl font-bold">
+          <fa icon="fa-solid fa-stopwatch"></fa> Tempus
+        </div>
+      </router-link>
+      <div class="flex justify-end p-2">
+        <router-link to="/" class="menu active">Home</router-link>
+        <router-link to="/workers" class="menu">Workers</router-link>
+      </div>
+    </header>
+    <section class="min-h-screen p-2">
       <router-view></router-view>
     </section>
   </div>
