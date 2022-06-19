@@ -1,15 +1,18 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
-import { workers, store } from "../store";
+import { useWorkersStore } from "../store";
 
 export default defineComponent({
   setup() {
+
+    const store = useWorkersStore();
+
     onMounted(async () => {
-      await workers.loadWorkers();
+      await store.loadWorkers();
     });
 
     return {
-      workers
+      workers: store.workers
     }
   }
 })
@@ -18,6 +21,9 @@ export default defineComponent({
 
 <template>
   <h1>Workers</h1>
-
+  <div>#/workers: {{ workers.length }}</div>
+  <div v-for="w in workers" :key="w.id">
+    <div>{{ w.lastName }}, {{ w.firstName}}</div>
+  </div>
 </template>
 

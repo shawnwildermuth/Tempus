@@ -1,32 +1,26 @@
-import { reactive, ref } from "vue";
-import WorkerStore from "./WorkerStore";
+import theWorkerStore from "./workerStore";
+import { defineStore } from "pinia";
 
-export class Store {
-
-  constructor() {
-    this.workers = new WorkerStore(this);
+export const useRootStore = defineStore("root", {
+  state: () => ({
+    isBusy: false,
+    error: ""
+  }),
+  actions: {
+    setBusy() {
+      this.isBusy = true;
+    },
+    setError(msg: string) {
+      this.error = msg;
+      console.error(msg);
+    },
+    clearError() {
+      this.error = "";
+    },
+    clearBusy() {
+      this.isBusy = false;
+    }
   }
+});
 
-  workers: WorkerStore;
-  isBusy = true;
-  error = "";
-
-  setBusy() {
-    this.isBusy = true;
-  }
-  setError(msg: string) {
-    this.error = msg;
-    console.error(msg);
-  }
-  clearError(msg: string) {
-    this.error = "";
-  }
-  clearBusy() {
-    this.isBusy = false;
-  }
-}
-
-const theStore = reactive(new Store());
-
-export const store = theStore;
-export const workers = theStore.workers;
+export const useWorkersStore = theWorkerStore;

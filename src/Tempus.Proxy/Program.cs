@@ -10,13 +10,14 @@ builder.Services.AddCors(opt =>
 
   opt.AddPolicy("tempus", cfg =>
   {
-    //if (builder.Environment.IsDevelopment())
-    //{
-      // Change for production!
-      cfg.AllowAnyHeader();
-      cfg.AllowAnyMethod();
-      cfg.AllowAnyOrigin();
-    //}
+    if (builder.Environment.IsDevelopment())
+    {
+     // Change for production!
+
+     cfg.AllowAnyHeader();
+     cfg.AllowAnyMethod();
+     cfg.AllowAnyOrigin();
+    }
   });
 });
 

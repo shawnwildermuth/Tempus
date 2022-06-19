@@ -7,3 +7,8 @@ export interface WorkerEntity {
   email: string | null;
   phone: string | null;
 }
+
+export interface WorkersResults {
+  count: number;
+  results: Array<WorkerEntity>
+}
