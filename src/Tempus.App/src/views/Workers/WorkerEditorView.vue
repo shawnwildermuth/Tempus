@@ -13,7 +13,15 @@ export default defineComponent({
     ValidationError
   },
   setup() {
-    const worker = ref({} as WorkerEntity);
+    const worker = ref({ 
+      id: 0,
+      userName: "shawnwildermuth",
+      firstName: "Shawn",
+      lastName: "Wildermuth",
+      baseRate: 300.00,
+      email: "shawn@wildermuth.com",
+      phone: "404-555-1212"
+      } as WorkerEntity);
     const store = useWorkersStore();
 
     const route = useRoute();
@@ -43,8 +51,9 @@ export default defineComponent({
     });
 
     async function save() {
-      const result = v.value.$validate();
-      if (!result) {
+      const valid = await v.value.$validate();
+      if (valid) {
+        await store.saveWorker(worker.value);
         router.push({ name: "workers" });
       }
     }
@@ -60,7 +69,7 @@ export default defineComponent({
 
 <template>
   <div class="border bg-slate-50 rounded p-1">
-    <form novalidate @submit.prevent="save()" class="editor">
+    <form novalidate @submit.prevent="save" class="editor">
       <div class="flex flex-col">
         <label for="userName">Username</label>
         <input
@@ -90,7 +99,7 @@ export default defineComponent({
           v-model="worker.email"
           placeholder="e.g. bob.smith@aol.com"
         />
-        <validation-error result="v.email"></validation-error>
+        <validation-error :result="v.email"></validation-error>
         <label for="baseRate">Base Rate ($/hr)</label>
         <input
           id="baseRate"
@@ -120,6 +129,6 @@ export default defineComponent({
         </div>
       </div>
     </form>
-    <!-- <pre>{{ v }}</pre> -->
+    <pre>{{ v }}</pre>
   </div>
 </template>
