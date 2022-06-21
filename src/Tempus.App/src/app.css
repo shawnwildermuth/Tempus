@@ -11,3 +11,11 @@
     @apply text-white drop-shadow-md p-1 hover:text-orange-300 border-r last:border-0 px-2;
   }
 }
+
+.editor input:not([type]),
+.editor input[type="text"],
+.editor input[type="email"],
+.editor input[type="number"],
+.editor input[type="phone"] {
+  @apply p-1 border text-lg placeholder:text-slate-300 placeholder:italic;
+}

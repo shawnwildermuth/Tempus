@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
-import { useWorkersStore } from "../store";
+import { useWorkersStore } from "../../store";
 
 export default defineComponent({
   setup() {
@@ -19,7 +19,7 @@ export default defineComponent({
 
 <template>
   <h1>Workers</h1>
-  <router-link to="/workers/editor" class="button">Add New</router-link>
+  <router-link :to="{ name: 'workerEditor', params: { id: 'new' } }" class="button">Add New</router-link>
   <div>#/workers: {{ workers.length }}</div>
   <div class="flex">
     <div class="w-2/3">

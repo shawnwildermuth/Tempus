@@ -1,17 +1,23 @@
-import Home from "../pages/Home.vue";
-import Workers from "../pages/Workers.vue";
-import WorkerEditor from "../pages/WorkerEditor.vue";
+import HomeView from "../views/HomeView.vue";
+import WorkersView from "../views/Workers/WorkersView.vue";
+import WorkerEditorView from "../views/Workers/WorkerEditorView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/", component: Home },
   {
+    name: "home",
+    path: "/",
+    component: HomeView,
+  },
+  {
+    name: "workers",
     path: "/workers",
-    component: Workers,
+    component: WorkersView,
     children: [
       {
-        path: "editor",
-        component: WorkerEditor
+        name: "workerEditor",
+        path: "editor/:id",
+        component: WorkerEditorView,
       },
     ],
   },
