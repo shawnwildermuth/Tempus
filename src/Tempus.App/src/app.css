@@ -7,15 +7,30 @@
     @apply font-bold;
   }
 
+  a {
+    @apply text-orange-800 hover:underline;
+  }
+
   .menu {
     @apply text-white drop-shadow-md p-1 hover:text-orange-300 border-r last:border-0 px-2;
   }
+
+  .editor input:not([type]),
+  .editor input[type="text"],
+  .editor input[type="email"],
+  .editor input[type="number"],
+  .editor input[type="phone"] {
+    @apply p-1 border text-lg placeholder:text-slate-300 placeholder:italic;
+  }
+
+  .button.button-success {
+    @apply bg-green-700 hover:bg-green-800;
+  }
+
 }
 
-.editor input:not([type]),
-.editor input[type="text"],
-.editor input[type="email"],
-.editor input[type="number"],
-.editor input[type="phone"] {
-  @apply p-1 border text-lg placeholder:text-slate-300 placeholder:italic;
+.Vue-Toastification__toast {
+  @apply p-2;
+  min-height: 2rem;
+
 }

@@ -5,8 +5,16 @@ using Yarp.ReverseProxy.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Setup Proxy
-builder.Services.AddTransient<IProxyConfigProvider, YarpConfig>();
-var proxyBuilder = builder.Services.AddReverseProxy();
+if (!builder.Environment.IsDevelopment())
+{
+  builder.Services.AddTransient<IProxyConfigProvider, YarpConfig>();
+  builder.Services.AddReverseProxy();
+}
+else
+{
+  var proxyBuilder = builder.Services.AddReverseProxy();
+  proxyBuilder.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+}
 
 builder.Services.AddCors(opt =>
 {

@@ -2,46 +2,47 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { WorkerEntity } from "../../models";
 import { useWorkersStore } from "../../store";
-import { useRoute } from "vue-router";
 import router from "../../router";
 import useValidate from "@vuelidate/core";
 import { email, minLength, numeric, required } from "@vuelidate/validators";
 import ValidationError from "../../components/validation-error.vue";
+import { useToast } from "vue-toastification";
 
 export default defineComponent({
   components: {
-    ValidationError
+    ValidationError,
   },
-  setup() {
-    const worker = ref({ 
+  props: ["id"],
+  setup(props) {
+    const worker = ref({
       id: 0,
-      userName: "shawnwildermuth",
-      firstName: "Shawn",
-      lastName: "Wildermuth",
-      baseRate: 300.00,
-      email: "shawn@wildermuth.com",
-      phone: "404-555-1212"
-      } as WorkerEntity);
-    const store = useWorkersStore();
+      userName: "",
+      firstName: "",
+      lastName: "",
+      baseRate: 300.0,
+      email: "",
+      phone: "",
+    } as WorkerEntity);
 
-    const route = useRoute();
+    const store = useWorkersStore();
 
     const rules = {
       userName: { required, minLength: minLength(5) },
-      firstName: { required, minLength: minLength(5)  },
+      firstName: { required, minLength: minLength(5) },
       lastName: { required, minLength: minLength(5) },
       phone: { required },
       email: { required, email },
       baseRate: { required, numeric },
-
     };
 
     var v = useValidate(rules, worker);
 
     onMounted(async () => {
-      const id = Number(route.params.id);
+      const id = Number(props.id);
       if (isNaN(id)) {
-        if (route.params.id !== "new") {
+        if (props.id !== "new") {
+          const toast = useToast();
+          toast.error("Bad ID for Worker");
           router.push({ name: "workers" });
         }
       } else {
@@ -61,7 +62,7 @@ export default defineComponent({
     return {
       worker,
       save,
-      v
+      v,
     };
   },
 });
@@ -129,6 +130,5 @@ export default defineComponent({
         </div>
       </div>
     </form>
-    <pre>{{ v }}</pre>
   </div>
 </template>

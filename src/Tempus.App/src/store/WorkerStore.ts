@@ -71,12 +71,13 @@ export default defineStore("workers", {
         rootStore.clearBusy();
       }
     },
-    async deleteWorker(worker: WorkerEntity) {
+    async deleteWorker(workerId: number) {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
+        const worker = await this.findWorker(workerId);
         // Is it actually saved?
-        if (worker.id === 0) {
+        if (!worker || worker.id === 0) {
           return false;
         } else {
           // Create new

@@ -4,11 +4,11 @@ const options: PluginOptions = {
   toastDefaults: {
     [TYPE.DEFAULT]: {
       position: POSITION.BOTTOM_RIGHT,
-      timeout: 5000,
+      timeout: 3000,
     },
     [TYPE.ERROR]: {
       position: POSITION.BOTTOM_RIGHT,
-      timeout: 5000,
+      timeout: false,
     }
   },
 };

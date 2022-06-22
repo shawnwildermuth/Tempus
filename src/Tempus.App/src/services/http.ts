@@ -1,6 +1,6 @@
 // Proxy Address
 let baseUrl = "";
-if (import.meta.env.MODE === "production") {
+if (import.meta.env.MODE !== "production") {
   baseUrl = "http://localhost:5010/api/";
 } else {
   baseUrl = "/api/";
