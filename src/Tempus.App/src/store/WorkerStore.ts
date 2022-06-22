@@ -1,3 +1,4 @@
+import { useToast } from 'vue-toastification';
 import { WorkerEntity } from "./../models";
 import { useRootStore } from ".";
 import http from "../services/http";
@@ -46,6 +47,8 @@ export default defineStore("workers", {
           // Create new
           const result = await http.post<WorkerEntity>("workers", worker);
           if (result) {
+            const toast = useToast();
+            toast("Saved...")
             this.workers.push(result);
           } else {
             rootStore.setError("Failed to save worker");
@@ -57,6 +60,8 @@ export default defineStore("workers", {
             worker
           );
           if (result) {
+            const toast = useToast();
+            toast("Saved...")
             this.workers.replaceEntityInArray(result);
           }
         }
@@ -78,6 +83,8 @@ export default defineStore("workers", {
           const result = await http.delete<WorkerEntity>(`workers/${worker.id}`);
           if (result) {
             this.workers.removeEntityFromArray(worker);
+            const toast = useToast();
+            toast("Deleted...")
           } else {
             rootStore.setError("Failed to delete worker");
           }

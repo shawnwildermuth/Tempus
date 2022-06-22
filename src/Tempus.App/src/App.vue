@@ -1,12 +1,12 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, watch, watchEffect } from "vue";
 import { useRootStore } from "./store";
 
 export default defineComponent({
   setup() {
     const store = useRootStore();
     return {
-      store
+      store,
     };
   },
 });
@@ -26,15 +26,6 @@ export default defineComponent({
       </div>
     </header>
     <section class="min-h-screen">
-      <div
-        class="bg-orange-500 text-black font-semibold text-xl p-1 flex justify-between"
-        v-show="store.error"
-      >
-        <div>{{ store.error }}</div>
-        <div class="px-2 hover:cursor-pointer" @click="store.clearError()">
-          &times;
-        </div>
-      </div>
       <div
         v-show="store.isBusy"
         class="bg-gray-800/50 absolute left-0 top-0 w-full h-full z-100 flex justify-center items-center"

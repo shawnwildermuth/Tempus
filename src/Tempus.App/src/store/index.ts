@@ -1,21 +1,19 @@
 import theWorkerStore from "./workerStore";
 import { defineStore } from "pinia";
+import { useToast } from "vue-toastification";
 
 export const useRootStore = defineStore("root", {
   state: () => ({
-    isBusy: false,
-    error: ""
+    isBusy: false
   }),
   actions: {
     setBusy() {
       this.isBusy = true;
     },
     setError(msg: string) {
-      this.error = msg;
+      var toast = useToast();
+      toast.error(msg);
       console.error(msg);
-    },
-    clearError() {
-      this.error = "";
     },
     clearBusy() {
       this.isBusy = false;
