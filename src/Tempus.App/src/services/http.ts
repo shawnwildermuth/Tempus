@@ -1,10 +1,5 @@
-//import { Axios } from "axios";
-
 // Proxy Address
 const baseUrl = "http://localhost:5010/api/";
-// const http = new Axios({
-//   baseURL: "http://localhost:5010/api/"
-// });
 
 export default {
   async get<T>(path: string): Promise<T | undefined> {

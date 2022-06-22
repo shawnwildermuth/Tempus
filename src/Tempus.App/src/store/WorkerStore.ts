@@ -1,26 +1,23 @@
-import { WorkersResults, WorkerEntity } from './../models';
+import { WorkerEntity } from "./../models";
 import { useRootStore } from ".";
 import http from "../services/http";
 import { defineStore } from "pinia";
-import { Ref } from 'vue';
-import { replaceArray } from '../utils';
+import "../extensions";
 
 let loaded = false;
 
 export default defineStore("workers", {
   state: () => ({
-    workers: []  as Array<WorkerEntity>
+    workers: [] as Array<WorkerEntity>,
   }),
-  getters: {
-  },
+  getters: {},
   actions: {
-    async findWorker(id: Number) : Promise<WorkerEntity | undefined> {
+    async findWorker(id: Number): Promise<WorkerEntity | undefined> {
       if (await this.loadWorkers()) {
-        return this.workers.find(w => w.id === id);
+        return this.workers.find((w) => w.id === id);
       } else return undefined;
     },
-    async loadWorkers() : Promise<Boolean> {
-      
+    async loadWorkers(): Promise<Boolean> {
       // Don't reload
       if (loaded) return true;
 
@@ -30,13 +27,12 @@ export default defineStore("workers", {
         rootStore.setBusy();
         const results = await http.get<Array<WorkerEntity>>("workers");
         if (results) {
-          replaceArray(this.workers, results);
+          this.workers.replaceEntities(results);
           loaded = true;
           return true;
         }
       } catch {
-      }
-      finally {
+      } finally {
         rootStore.clearBusy();
       }
       rootStore.setError("Failed to load workers...");
@@ -56,19 +52,41 @@ export default defineStore("workers", {
           }
         } else {
           // Update
-          const results = await http.put<WorkerEntity>(`workers/${worker.id}`, worker);
-          if (results.status === 200) {
-            this.workers.push(results.data);
+          const result = await http.put<WorkerEntity>(
+            `workers/${worker.id}`,
+            worker
+          );
+          if (result) {
+            this.workers.replaceEntityInArray(result);
           }
         }
       } catch (e) {
         rootStore.setError("Failed to save worker...");
-      }
-      finally {
+      } finally {
         rootStore.clearBusy();
       }
-
-    }
-
-  }
+    },
+    async deleteWorker(worker: WorkerEntity) {
+      const rootStore = useRootStore();
+      try {
+        rootStore.setBusy();
+        // Is it actually saved?
+        if (worker.id === 0) {
+          return false;
+        } else {
+          // Create new
+          const result = await http.delete<WorkerEntity>(`workers/${worker.id}`);
+          if (result) {
+            this.workers.removeEntityFromArray(worker);
+          } else {
+            rootStore.setError("Failed to delete worker");
+          }
+        }
+      } catch (e) {
+        rootStore.setError("Failed to delete worker...");
+      } finally {
+        rootStore.clearBusy();
+      }
+    },
+  },
 });

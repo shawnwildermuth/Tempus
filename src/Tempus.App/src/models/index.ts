@@ -1,4 +1,8 @@
-export interface WorkerEntity {
+export interface IEntity {
+  id: number;
+}
+
+export interface WorkerEntity extends IEntity {
   id: number;
   userName: string;
   baseRate: number;
