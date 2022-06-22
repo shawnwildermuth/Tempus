@@ -7,8 +7,6 @@ builder.Services.AddApis();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
 app.MapApis();
 
 app.Run();

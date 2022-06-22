@@ -10,8 +10,6 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
 app.MapApis();
 
 app.Run();

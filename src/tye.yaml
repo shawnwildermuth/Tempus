@@ -1,0 +1,21 @@
+name: tempus
+services:
+- name: tempus-proxy
+  project: Tempus.Proxy/Tempus.Proxy.csproj
+  bindings:
+    - protocol: http
+      port: 5010
+- name: tempus-workers
+  project: Tempus.Workers/Tempus.Workers.csproj
+- name: tempus-customers
+  project: Tempus.Customers/Tempus.Customers.csproj
+- name: tempus-timebills
+  project: Tempus.TimeBilling/Tempus.TimeBilling.csproj
+- name: tempus-worktypes
+  project: Tempus.WorkTypes/Tempus.WorkTypes.csproj
+#- name: tempus-emails
+#  project: Tempus.Emails/Tempus.Emails.csproj
+#- name: tempus-invoices
+#  project: Tempus.Invoices/Tempus.Invoices.csproj
+#- name: tempus-payments
+#  project: Tempus.Payments/Tempus.Payments.csproj

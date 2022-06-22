@@ -1,5 +1,10 @@
 // Proxy Address
-const baseUrl = "http://localhost:5010/api/";
+let baseUrl = "";
+if (import.meta.env.MODE === "production") {
+  baseUrl = "http://localhost:5010/api/";
+} else {
+  baseUrl = "/api/";
+}
 
 export default {
   async get<T>(path: string): Promise<T | undefined> {

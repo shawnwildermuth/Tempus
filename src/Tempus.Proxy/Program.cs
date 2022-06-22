@@ -1,9 +1,12 @@
-using Yarp.ReverseProxy;
+using Tempus.Proxy;
+
+using Yarp.ReverseProxy.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Setup Proxy
+builder.Services.AddTransient<IProxyConfigProvider, YarpConfig>();
 var proxyBuilder = builder.Services.AddReverseProxy();
-proxyBuilder.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.Services.AddCors(opt =>
 {
@@ -12,16 +15,19 @@ builder.Services.AddCors(opt =>
   {
     if (builder.Environment.IsDevelopment())
     {
-     // Change for production!
+      // Change for production!
 
-     cfg.AllowAnyHeader();
-     cfg.AllowAnyMethod();
-     cfg.AllowAnyOrigin();
+      cfg.AllowAnyHeader();
+      cfg.AllowAnyMethod();
+      cfg.AllowAnyOrigin();
     }
   });
 });
 
 var app = builder.Build();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseCors();
 
