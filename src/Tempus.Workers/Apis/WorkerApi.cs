@@ -1,6 +1,5 @@
 ﻿
 using Tempus.Workers.Data;
-using Tempus.Workers.Models;
 
 namespace Tempus.Workers.Apis;
 
@@ -28,7 +27,7 @@ public class WorkerApi : IApi
       .OrderBy(c => c.LastName)
       .ToListAsync();
 
-    return Results.Ok(new WorkersResult() { Count = results.Count(), Results = results });
+    return Results.Ok(new ResultSet<Worker>() { Count = results.Count(), Results = results });
   }
 
   public async Task<IResult> GetWorker(WorkerContext ctx, int id)

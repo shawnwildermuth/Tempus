@@ -24,7 +24,7 @@ public class WorkTypeApi : IApi
       .OrderBy(c => c.Name)
       .ToListAsync();
 
-    return Results.Ok(results);
+    return Results.Ok(new ResultSet<WorkType>() { Count = results.Count(), Results = results });
   }
 
   public async Task<IResult> GetWorkType(WorkTypeContext ctx, int id)

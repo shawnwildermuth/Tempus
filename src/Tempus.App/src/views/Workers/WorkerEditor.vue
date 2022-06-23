@@ -54,8 +54,9 @@ export default defineComponent({
     async function save() {
       const valid = await v.value.$validate();
       if (valid) {
-        await store.saveWorker(worker.value);
-        router.push({ name: "workers" });
+        if (await store.saveWorker(worker.value)) {
+          router.push({ name: "workers" });
+        }
       }
     }
 

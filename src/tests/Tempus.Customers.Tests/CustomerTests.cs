@@ -40,9 +40,9 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
   [Fact]
   public async Task TestGetCustomers()
   {
-    var response = await _client.GetFromJsonAsync<Customer[]>("/api/customers");
+    var response = await _client.GetFromJsonAsync<ResultSet<Customer>>("/api/customers");
 
-    Assert.Equal(new Customer[] { }, response);
+    Assert.Equal(new Customer[] { }, response?.Results);
   }
 
   [Fact]

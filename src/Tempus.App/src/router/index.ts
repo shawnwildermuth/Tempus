@@ -1,8 +1,9 @@
-import HomeVue from "../views/Home.vue";
-import WorkersVue from "../views/Workers/Workers.vue";
-import WorkerEditorVue from "../views/Workers/WorkerEditor.vue";
 import { createRouter, createWebHistory } from "vue-router";
-import WorkerDetailsVue from "../views/Workers/WorkerDetails.vue";
+
+import HomeVue from "../views/Home.vue";
+
+import workerRoutes from "./workers";
+import workTypeRoutes from "./workTypes";
 
 const routes = [
   {
@@ -10,25 +11,8 @@ const routes = [
     path: "/",
     component: HomeVue,
   },
-  {
-    name: "workers",
-    path: "/workers",
-    component: WorkersVue,
-    children: [
-      {
-        name: "workerEditor",
-        path: "editor/:id",
-        component: WorkerEditorVue,
-        props: true 
-      },
-      {
-        name: "workerDetails",
-        path: "details/:id",
-        component: WorkerDetailsVue,
-        props: true 
-      },
-    ],
-  },
+  workerRoutes,
+  workTypeRoutes
 ];
 
 const router = createRouter({

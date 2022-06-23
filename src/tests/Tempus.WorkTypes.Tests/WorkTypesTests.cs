@@ -23,9 +23,9 @@ public class WorkTypesTests : BaseApiTests<Program, WorkTypeContext>
   [Fact]
   public async void TestGetWorkTypes()
   {
-    var response = await _client.GetFromJsonAsync<WorkType[]>("/api/worktypes");
+    var response = await _client.GetFromJsonAsync<ResultSet<WorkType>>("/api/worktypes");
 
-    Assert.Equal(new WorkType[] { }, response);
+    Assert.Equal(new WorkType[] { }, response?.Results);
   }
 
   [Fact]

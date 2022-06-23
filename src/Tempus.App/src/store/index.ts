@@ -1,4 +1,5 @@
 import theWorkerStore from "./workerStore";
+import theWorkTypeStore from "./workTypeStore";
 import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 
@@ -22,3 +23,4 @@ export const useRootStore = defineStore("root", {
 });
 
 export const useWorkersStore = theWorkerStore;
+export const useWorkTypeStore = theWorkTypeStore;

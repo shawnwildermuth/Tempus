@@ -27,9 +27,9 @@ public class TimeBillingTests : BaseApiTests<Program, TimeBillingContext>
   [Fact]
   public async void TestGetTimeBills()
   {
-    var response = await _client.GetFromJsonAsync<TimeBill[]>("/api/timebills");
+    var response = await _client.GetFromJsonAsync<ResultSet<TimeBill>>("/api/timebills");
 
-    Assert.Equal(new TimeBill[] { }, response);
+    Assert.Equal(new TimeBill[] { }, response?.Results);
   }
 
   [Fact]

@@ -1,5 +1,5 @@
 import { useToast } from 'vue-toastification';
-import { WorkerEntity } from "./../models";
+import { WorkTypeEntity } from "../models";
 import { useRootStore } from ".";
 import http from "../services/http";
 import { defineStore } from "pinia";
@@ -7,18 +7,18 @@ import "../extensions";
 
 let loaded = false;
 
-export default defineStore("workers", {
+export default defineStore("workTypes", {
   state: () => ({
-    workers: [] as Array<WorkerEntity>,
+    workTypes: [] as Array<WorkTypeEntity>,
   }),
   getters: {},
   actions: {
-    async findWorker(id: Number): Promise<WorkerEntity | undefined> {
-      if (await this.loadWorkers()) {
-        return this.workers.find((w) => w.id === id);
+    async findWorker(id: Number): Promise<WorkTypeEntity | undefined> {
+      if (await this.loadWorkTypes()) {
+        return this.workTypes.find((w) => w.id === id);
       } else return undefined;
     },
-    async loadWorkers(): Promise<Boolean> {
+    async loadWorkTypes(): Promise<Boolean> {
       // Don't reload
       if (loaded) return true;
 
@@ -26,9 +26,9 @@ export default defineStore("workers", {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
-        const results = await http.get<Array<WorkerEntity>>("workers");
+        const results = await http.get<Array<WorkTypeEntity>>("worktypes");
         if (results) {
-          this.workers.replaceEntities(results);
+          this.workTypes.replaceEntities(results);
           loaded = true;
           return true;
         }
@@ -36,67 +36,68 @@ export default defineStore("workers", {
       } finally {
         rootStore.clearBusy();
       }
-      rootStore.setError("Failed to load workers...");
+      rootStore.setError("Failed to load work types...");
       return false;
     },
-    async saveWorker(worker: WorkerEntity) : Promise<boolean> {
+    async saveWorkType(worker: WorkTypeEntity): Promise<Boolean> {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
         if (worker.id === 0) {
           // Create new
-          const result = await http.post<WorkerEntity>("workers", worker);
+          const result = await http.post<WorkTypeEntity>("worktypes", worker);
           if (result) {
             const toast = useToast();
             toast("Saved...")
-            this.workers.push(result);
+            this.workTypes.push(result);
             return true;
           } else {
-            rootStore.setError("Failed to save worker");
+            rootStore.setError("Failed to save work type");
           }
         } else {
           // Update
-          const result = await http.put<WorkerEntity>(
-            `workers/${worker.id}`,
+          const result = await http.put<WorkTypeEntity>(
+            `worktypes/${worker.id}`,
             worker
           );
           if (result) {
             const toast = useToast();
             toast("Saved...")
-            this.workers.replaceEntityInArray(result);
+            this.workTypes.replaceEntityInArray(result);
+            return true;
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to save worker...");
+        rootStore.setError("Failed to save work type...");
       } finally {
         rootStore.clearBusy();
       }
       return false;
     },
-    async deleteWorker(workerId: number): Promise<Boolean> {
+    async deleteWorkType(workerId: number) {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
         const worker = await this.findWorker(workerId);
         // Is it actually saved?
-        if (worker && worker.id > 0) {
-          // Delete
-          const result = await http.delete<WorkerEntity>(`workers/${worker.id}`);
+        if (!worker || worker.id === 0) {
+          return false;
+        } else {
+          // Create new
+          const result = await http.delete<WorkTypeEntity>(`worktypes/${worker.id}`);
           if (result) {
-            this.workers.removeEntityFromArray(worker);
+            this.workTypes.removeEntityFromArray(worker);
             const toast = useToast();
             toast("Deleted...")
-            return true;
           } else {
-            rootStore.setError("Failed to delete worker");
+            rootStore.setError("Failed to delete work type");
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to delete worker...");
+        rootStore.setError("Failed to delete worktype...");
       } finally {
         rootStore.clearBusy();
       }
-      return false;
     },
   },
 });

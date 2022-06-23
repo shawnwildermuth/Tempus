@@ -24,7 +24,7 @@ public class TimeBillingApi : IApi
       .OrderBy(c => c.WorkerId)
       .ToListAsync();
 
-    return Results.Ok(results);
+    return Results.Ok(new ResultSet<TimeBill>() { Count = results.Count(), Results = results });
   }
 
   public async Task<IResult> GetTimeBill(TimeBillingContext ctx, int id)

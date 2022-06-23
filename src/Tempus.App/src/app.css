@@ -19,7 +19,9 @@
   .editor input[type="text"],
   .editor input[type="email"],
   .editor input[type="number"],
-  .editor input[type="phone"] {
+  .editor input[type="phone"],
+  .editor textarea,
+  .editor select {
     @apply p-1 border text-lg placeholder:text-slate-300 placeholder:italic;
   }
 

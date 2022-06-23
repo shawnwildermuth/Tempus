@@ -26,7 +26,7 @@ public class CustomerApi : IApi
       .OrderBy(c => c.CompanyName)
       .ToListAsync();
 
-    return Results.Ok(results);
+    return Results.Ok(new ResultSet<Customer>() { Count = results.Count(), Results = results });
   }
 
   public async Task<IResult> GetCustomer(CustomerContext ctx, int id)

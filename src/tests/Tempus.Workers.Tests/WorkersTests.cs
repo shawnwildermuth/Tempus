@@ -26,9 +26,9 @@ public class WorkersTests : BaseApiTests<Program, WorkerContext>
   [Fact]
   public async void TestGetWorkers()
   {
-    var response = await _client.GetFromJsonAsync<Worker[]>("/api/workers");
+    var response = await _client.GetFromJsonAsync<ResultSet<Worker>>("/api/workers");
 
-    Assert.Equal(new Worker[] { }, response);
+    Assert.Equal(new Worker[] { }, response.Results);
   }
 
   [Fact]

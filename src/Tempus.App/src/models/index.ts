@@ -16,3 +16,10 @@ export interface WorkersResults {
   count: number;
   results: Array<WorkerEntity>
 }
+
+export interface WorkTypeEntity extends IEntity {
+  id: number;
+  name: string;
+  description: string;
+  defaultRate: number;
+}
