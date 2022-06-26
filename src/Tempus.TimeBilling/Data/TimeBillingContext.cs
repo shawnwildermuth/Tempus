@@ -17,4 +17,22 @@ public class TimeBillingContext : DbContext
 
   public DbSet<TimeBill> TimeBills => Set<TimeBill>();
 
+  protected override void OnModelCreating(ModelBuilder bldr)
+  {
+    bldr.Entity<TimeBill>()
+      .HasData(new TimeBill[]
+      {
+        new TimeBill()
+        {
+          Id = 1,
+          CustomerId = 1,
+          Hours = 1.3m,
+          Rate = 135m,
+          WorkerId = 1,
+          WorkPerformed = "Consulting",
+          Notes = "Worked with the client on architecture."
+        }
+      });
+  }
+
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tempus.TimeBilling.Data;
 
@@ -10,9 +11,10 @@ using Tempus.TimeBilling.Data;
 namespace Tempus.TimeBilling.Migrations
 {
     [DbContext(typeof(TimeBillingContext))]
-    partial class TimeBillingContextModelSnapshot : ModelSnapshot
+    [Migration("20220626022351_SampleData")]
+    partial class SampleData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

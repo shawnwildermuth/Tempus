@@ -15,5 +15,20 @@ public class WorkTypeContext : DbContext
   }
 
   public DbSet<WorkType> WorkTypes => Set<WorkType>();
- 
+
+  protected override void OnModelCreating(ModelBuilder bldr)
+  {
+    bldr.Entity<WorkType>()
+      .HasData(new WorkType[]
+      {
+        new WorkType()
+        {
+          Id = 1,
+          Name = "Consulting",
+          DefaultRate = 100m,
+          Description = "Discussions with client."
+        }
+      });
+  }
+
 }

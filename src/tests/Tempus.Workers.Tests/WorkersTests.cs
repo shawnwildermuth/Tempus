@@ -15,11 +15,11 @@ public class WorkersTests : BaseApiTests<Program, WorkerContext>
 
     _newWorker = new Worker()
     {
-      BaseRate = 300m,
-      FirstName = "Shawn",
+      BaseRate = 100m,
+      FirstName = "Jake",
       LastName = "Smith",
       Email = "shawn@aol.com",
-      UserName = "shawnwildermuth"
+      UserName = "jakesmith"
     };
   }
 
@@ -28,7 +28,7 @@ public class WorkersTests : BaseApiTests<Program, WorkerContext>
   {
     var response = await _client.GetFromJsonAsync<ResultSet<Worker>>("/api/workers");
 
-    Assert.Equal(new Worker[] { }, response.Results);
+    Assert.True(response?.Results.Count() > 0);
   }
 
   [Fact]
@@ -39,8 +39,8 @@ public class WorkersTests : BaseApiTests<Program, WorkerContext>
     var updated = await response.Content.ReadFromJsonAsync<Worker>()!;
 
     Assert.NotNull(updated);
-    Assert.Equal("shawnwildermuth", updated?.UserName);
-    Assert.Equal(300m, updated?.BaseRate);
+    Assert.Equal("jakesmith", updated?.UserName);
+    Assert.Equal(100m, updated?.BaseRate);
   }
 
   [Fact]

@@ -29,7 +29,7 @@ public class TimeBillingTests : BaseApiTests<Program, TimeBillingContext>
   {
     var response = await _client.GetFromJsonAsync<ResultSet<TimeBill>>("/api/timebills");
 
-    Assert.Equal(new TimeBill[] { }, response?.Results);
+    Assert.True(response?.Results.Count() > 0);
   }
 
   [Fact]

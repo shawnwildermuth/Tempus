@@ -42,7 +42,7 @@ public class CustomerTests : BaseApiTests<Program, CustomerContext>
   {
     var response = await _client.GetFromJsonAsync<ResultSet<Customer>>("/api/customers");
 
-    Assert.Equal(new Customer[] { }, response?.Results);
+    Assert.True(response?.Results.Count() > 0);
   }
 
   [Fact]
