@@ -8,13 +8,13 @@ export default {
   component: CustomersVue,
   children: [
     {
-      name: "workerEditor",
+      name: "customerEditor",
       path: "editor/:id",
       component: CustomerEditorVue,
       props: true 
     },
     {
-      name: "workerDetails",
+      name: "customerDetails",
       path: "details/:id",
       component: CustomerDetailsVue,
       props: true 

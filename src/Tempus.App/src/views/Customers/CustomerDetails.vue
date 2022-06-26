@@ -1,35 +1,34 @@
-useWorkerStore<script lang="ts">
+<script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "vue";
-import { WorkerEntity } from "../../models";
-import { useWorkerStore } from "../../store";
+import { CustomerEntity } from "../../models";
+import { useCustomerStore } from "../../store";
 import { useRoute } from "vue-router";
 import router from "../../router";
 import { useToast } from "vue-toastification";
-import { toMoney } from "../../filters";
+import { toAddressBlock, toMoney } from "../../filters";
 
 export default defineComponent({
   props: ["id"],
   setup(props) {
-    const worker = ref({} as WorkerEntity);
-    const route = useRoute();
-    const store = useWorkerStore();
+    const customer = ref({} as CustomerEntity);
+    const store = useCustomerStore();
     const toast = useToast();
 
     // watch for the property change
     watch(
       () => props.id,
       async () => {
-        await loadWorker();
+        await loadCustomer();
       }
     );
 
-    onMounted(async () => await loadWorker());
+    onMounted(async () => await loadCustomer());
 
-    async function loadWorker() {
+    async function loadCustomer() {
       const idNumber = Number(props.id);
       if (idNumber && !isNaN(idNumber)) {
-        const found = await store.findWorker(idNumber);
-        if (found) worker.value = found;
+        const found = await store.findCustomer(idNumber);
+        if (found) customer.value = found;
         return;
       }
       toast.error("Bad id for worker");
@@ -37,8 +36,9 @@ export default defineComponent({
     }
 
     return {
-      worker,
+      customer,
       toMoney,
+      toAddressBlock
     };
   },
 });
@@ -48,29 +48,19 @@ export default defineComponent({
   <div class="border rounded bg-slate-200">
     <dl>
       <dt>Name:</dt>
-      <dd>{{ worker.lastName }}, {{ worker.firstName }}</dd>
-    </dl>
-    <dl>
-      <dt>Username:</dt>
-      <dd>{{ worker.userName }}</dd>
-    </dl>
-    <dl>
-      <dt>Base Rate:</dt>
-      <dd>{{ toMoney(worker.baseRate) }}</dd>
-    </dl>
-    <dl>
-      <dt>Email:</dt>
-      <dd>
-        <a :href="`mailto:${worker.email}`">{{ worker.email }}</a>
-      </dd>
+      <dd>{{ customer.companyName }}</dd>
     </dl>
     <dl>
       <dt>Phone:</dt>
       <dd>
-        <a :href="`tel:${worker.phone}`">{{ worker.phone }}</a>
+        <a :href="`tel:${customer.companyPhone}`">{{ customer.companyPhone }}</a>
       </dd>
     </dl>
-    <router-link :to="{ name: 'workers' }" class="button text-sm"
+    <dl>
+      <dt>Address:</dt>
+      <dd v-html="toAddressBlock(customer.location)"></dd>
+    </dl>
+    <router-link :to="{ name: 'customers' }" class="button text-sm"
       >Close</router-link
     >
   </div>

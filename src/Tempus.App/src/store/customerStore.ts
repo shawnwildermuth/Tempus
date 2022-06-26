@@ -39,7 +39,7 @@ export default defineStore("customers", {
       rootStore.setError("Failed to load customers...");
       return false;
     },
-    async saveWorkType(customer: CustomerEntity): Promise<Boolean> {
+    async saveCustomer(customer: CustomerEntity): Promise<Boolean> {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
@@ -74,7 +74,7 @@ export default defineStore("customers", {
       }
       return false;
     },
-    async deleteWorkType(customerId: number) {
+    async deleteCustomer(customerId: number) {
       const rootStore = useRootStore();
       try {
         rootStore.setBusy();
