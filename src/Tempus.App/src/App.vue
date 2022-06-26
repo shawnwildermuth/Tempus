@@ -22,6 +22,7 @@ export default defineComponent({
       </router-link>
       <div class="flex justify-end p-2">
         <router-link to="/" class="menu active">Home</router-link>
+        <router-link to="/customers" class="menu">Customers</router-link>
         <router-link to="/workers" class="menu">Workers</router-link>
         <router-link to="/worktypes" class="menu">Work Types</router-link>
       </div>

@@ -1,7 +1,7 @@
-import WorkersVue from "../views/Workers/Workers.vue";
-import WorkerEditorVue from "../views/Workers/WorkerEditor.vue";
-import WorkerDetailsVue from "../views/Workers/WorkerDetails.vue";
-
+import WorkersVue from "./Workers.vue";
+import WorkerEditorVue from "./WorkerEditor.vue";
+import WorkerDetailsVue from "./WorkerDetails.vue";
+ 
 export default {
   name: "workers",
   path: "/workers",

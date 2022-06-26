@@ -7,7 +7,6 @@ namespace Tempus.Customers.Data;
 public class Contact
 {
   public int Id { get; set; }
-  public int CustomerId { get; set; }
   [MaxLength(100)]
   public string Title { get; set; } = "";
   [Required]

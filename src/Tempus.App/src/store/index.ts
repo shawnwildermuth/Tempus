@@ -1,5 +1,6 @@
 import theWorkerStore from "./workerStore";
 import theWorkTypeStore from "./workTypeStore";
+import theCustomerStore from "./customerStore";
 import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 
@@ -22,5 +23,6 @@ export const useRootStore = defineStore("root", {
   }
 });
 
-export const useWorkersStore = theWorkerStore;
+export const useWorkerStore = theWorkerStore;
 export const useWorkTypeStore = theWorkTypeStore;
+export const useCustomerStore = theCustomerStore;

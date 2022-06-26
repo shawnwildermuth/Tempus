@@ -1,6 +1,6 @@
-import WorkTypeVue from "../views/WorkTypes/WorkTypes.vue";
-import WorkTypeEditorVue from "../views/WorkTypes/WorkTypeEditor.vue";
-import WorkTypeDetailsVue from "../views/WorkTypes/WorkTypeDetails.vue";
+import WorkTypeVue from "./WorkTypes.vue";
+import WorkTypeEditorVue from "./WorkTypeEditor.vue";
+import WorkTypeDetailsVue from "./WorkTypeDetails.vue";
 
 
 export default {

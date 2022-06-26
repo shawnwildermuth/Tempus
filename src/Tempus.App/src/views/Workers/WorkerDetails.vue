@@ -1,7 +1,7 @@
-<script lang="ts">
+useWorkerStore<script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { WorkerEntity } from "../../models";
-import { useWorkersStore } from "../../store";
+import { useWorkerStore } from "../../store";
 import { useRoute } from "vue-router";
 import router from "../../router";
 import { useToast } from "vue-toastification";
@@ -12,7 +12,7 @@ export default defineComponent({
   setup(props) {
     const worker = ref({} as WorkerEntity);
     const route = useRoute();
-    const store = useWorkersStore();
+    const store = useWorkerStore();
     const toast = useToast();
 
     // watch for the property change

@@ -11,8 +11,8 @@ using Tempus.Customers.Data;
 namespace Tempus.Customers.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20220626030445_SampleData")]
-    partial class SampleData
+    [Migration("20220626053734_initialdb")]
+    partial class initialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
