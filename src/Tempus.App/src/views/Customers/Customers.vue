@@ -68,7 +68,7 @@ export default defineComponent({
           <td class="text-right">
             <router-link
               class="button text-xs mx-1"
-              :to="{ name: 'workerEditor', params: { id: c.id } }"
+              :to="{ name: 'customerEditor', params: { id: c.id } }"
               >Edit</router-link
             >
             <button class="button text-xs mx-1" @click="onDelete(c.id)">
@@ -78,7 +78,7 @@ export default defineComponent({
         </tr>
       </table>
       <router-link
-        :to="{ name: 'workerEditor', params: { id: 'new' } }"
+        :to="{ name: 'customerEditor', params: { id: 'new' } }"
         class="button"
         >Add New</router-link
       >

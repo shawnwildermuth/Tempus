@@ -1,17 +1,26 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
   name: "validationError",
   props: ["result"],
-  setup() {
-    return {};
+  setup(props) {
+    const errorMessage = ref("");
+
+    watchEffect(() => {
+      errorMessage.value = 
+        props.result.$errors?.length > 0 ? 
+        props.result.$errors[0]?.$message : 
+        "";
+    });
+
+    return {
+      errorMessage
+    };
   },
 });
 </script>
 
 <template>
-  <div v-for="error of result.$errors" :key="error.$uid">
-    <div class="text-red-700 italic text-sm">{{ error.$message }}</div>
-  </div>
+  <div class="text-red-700 italic text-sm">{{ errorMessage }}</div>
 </template>

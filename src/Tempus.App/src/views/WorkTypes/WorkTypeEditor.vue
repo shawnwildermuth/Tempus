@@ -68,7 +68,12 @@ export default defineComponent({
     <form novalidate @submit.prevent="save" class="editor">
       <div class="flex flex-col">
         <label for="name">Name</label>
-        <input id="name" v-model="workType.name" placeholder="e.g. Consulting" />
+        <input
+          id="name"
+          v-model="workType.name"
+          placeholder="e.g. Consulting"
+          v-valid="v.name"
+        />
         <validation-error :result="v.name"></validation-error>
         <label for="description">Description</label>
         <textarea
@@ -76,6 +81,7 @@ export default defineComponent({
           id="description"
           v-model="workType.description"
           placeholder="e.g. The reason for this Work Type is..."
+          v-valid="v.description"
         ></textarea>
         <validation-error :result="v.description"></validation-error>
         <label for="defaultRate">Default Rate ($/hr)</label>
@@ -83,6 +89,7 @@ export default defineComponent({
           id="defaultRate"
           v-model="workType.defaultRate"
           placeholder="e.g. 100.00"
+          v-valid="v.defaultRate"
         />
         <validation-error :result="v.defaultRate"></validation-error>
         <div>

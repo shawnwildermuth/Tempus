@@ -1,12 +1,14 @@
-useWorkerStore<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import { WorkerEntity } from "../../models";
-import { useWorkerStore } from "../../store";
+useWorkerStore
+<script lang="ts">
+import { defineComponent, ref, onMounted, reactive } from "vue";
+import { ContactEntity, CustomerEntity } from "../../models";
+import { useCustomerStore } from "../../store";
 import router from "../../router";
 import useValidate from "@vuelidate/core";
 import { email, minLength, numeric, required } from "@vuelidate/validators";
 import ValidationError from "../../components/validation-error.vue";
 import { useToast } from "vue-toastification";
+import { phone } from "../../validators";
 
 export default defineComponent({
   components: {
@@ -14,56 +16,82 @@ export default defineComponent({
   },
   props: ["id"],
   setup(props) {
-    const worker = ref({
+    const customer = ref({
       id: 0,
-      userName: "",
-      firstName: "",
-      lastName: "",
-      baseRate: 300.0,
-      email: "",
-      phone: "",
-    } as WorkerEntity);
+      companyName: "",
+      companyPhone: "",
+      location: {
+        id: 0,
+        lineOne: "",
+        lineTwo: null,
+        lineThree: null,
+        city: "",
+        stateProvince: "",
+        postalCode: "",
+        country: null
+      },
+      contacts: new Array<ContactEntity>(),
+    } as CustomerEntity);
 
-    const store = useWorkerStore();
+    const location = ref(customer.value.location);
+
+    const store = useCustomerStore();
 
     const rules = {
-      userName: { required, minLength: minLength(5) },
-      firstName: { required, minLength: minLength(5) },
-      lastName: { required, minLength: minLength(5) },
-      phone: { required },
-      email: { required, email },
-      baseRate: { required, numeric },
+      id: {},
+      companyName: { required, minLength: minLength(5) },
+      companyPhone: { required, phone },
     };
 
-    var v = useValidate(rules, worker);
+    const locationRules = {
+      id: {},
+      lineOne: { required },
+      lineTwo: {},
+      lineThree: {},
+      city: { required },
+      stateProvince: { required },
+      postalCode: { required },
+      country: {},
+    };
+
+    var v = useValidate(rules, customer);
+    var lv = useValidate(locationRules, customer.value.location);
 
     onMounted(async () => {
       const id = Number(props.id);
       if (isNaN(id)) {
         if (props.id !== "new") {
           const toast = useToast();
-          toast.error("Bad ID for Worker");
-          router.push({ name: "workers" });
+          toast.error("Bad Customer");
+          router.push({ name: "customers" });
         }
       } else {
-        const foundWorker = await store.findWorker(id);
-        if (foundWorker) worker.value = foundWorker;
+        const foundWorker = await store.findCustomer(id);
+        if (foundWorker) {
+         customer.value = foundWorker;
+         location.value = foundWorker.location;
+        }
       }
     });
 
     async function save() {
       const valid = await v.value.$validate();
-      if (valid) {
-        if (await store.saveWorker(worker.value)) {
-          router.push({ name: "workers" });
+      const locationValid = await lv.value.$validate();
+      if (valid && locationValid) {
+        const forSave = customer.value;
+        forSave.location = location.value;
+        if (await store.saveCustomer(forSave)) {
+          router.push({ name: "customers" });
         }
       }
     }
 
     return {
-      worker,
+      customer,
+      location,
       save,
       v,
+      lv
     };
   },
 });
@@ -73,50 +101,80 @@ export default defineComponent({
   <div class="border bg-slate-50 rounded p-1">
     <form novalidate @submit.prevent="save" class="editor">
       <div class="flex flex-col">
-        <label for="userName">Username</label>
+        <label for="companyName">Company Name</label>
         <input
-          id="userName"
-          v-model="worker.userName"
-          placeholder="e.g. bobsmith"
+          id="companyName"
+          v-model="customer.companyName"
+          placeholder="Acme Goods, LLC"
+          v-valid="v.companyName"
         />
-        <validation-error :result="v.userName"></validation-error>
-        <label for="firstName">First Name</label>
+        <validation-error :result="v.companyName"></validation-error>
+        <label for="companyPhone">Company Phone</label>
         <input
-          id="firstName"
-          v-model="worker.firstName"
-          placeholder="e.g. Bob"
+          id="companyPhone"
+          v-model="customer.companyPhone"
+          placeholder="(404) 555-1212"
+          v-valid="v.companyPhone"
         />
-        <validation-error :result="v.firstName"></validation-error>
-        <label for="lastName">Last Name</label>
+        <validation-error :result="v.companyPhone"></validation-error>
+        <label for="lineOne">Address</label>
         <input
-          id="lastName"
-          v-model="worker.lastName"
-          placeholder="e.g. Smith"
+          id="lineOne"
+          v-model="location.lineOne"
+          placeholder="123 Main Street"
+          v-valid="lv.lineOne"
         />
-        <validation-error :result="v.lastName"></validation-error>
-        <label for="email">Email</label>
+        <validation-error :result="lv.lineOne"></validation-error>
         <input
-          id="email"
-          type="email"
-          v-model="worker.email"
-          placeholder="e.g. bob.smith@aol.com"
+          id="lineTwo"
+          v-model="location.lineTwo"
+          placeholder="Suite 500"
+          v-valid="lv.lineTwo"
         />
-        <validation-error :result="v.email"></validation-error>
-        <label for="baseRate">Base Rate ($/hr)</label>
+        <validation-error :result="lv.lineTwo"></validation-error>
         <input
-          id="baseRate"
-          v-model="worker.baseRate"
-          placeholder="e.g. 100.00"
+          id="lineThree"
+          v-model="location.lineThree"
+          placeholder="Attn: Bill"
+          v-valid="lv.lineThree"
         />
-        <validation-error :result="v.baseRate"></validation-error>
-        <label for="phone">Phone</label>
+        <validation-error :result="lv.lineThree"></validation-error>
+        <label for="city">City</label>
         <input
-          id="phone"
-          type="phone"
-          v-model="worker.phone"
-          placeholder="e.g. (404) 555-1212"
+          id="city"
+          type="text"
+          v-model="location.city"
+          placeholder="Atlanta"
+          v-valid="lv.city"
         />
-        <validation-error :result="v.phone"></validation-error>
+        <validation-error :result="lv.city"></validation-error>
+        <label for="stateProvince">State/Province</label>
+        <input
+          id="stateProvince"
+          type="text"
+          v-model="location.stateProvince"
+          placeholder="GA"
+          v-valid="lv.stateProvince"
+        />
+        <validation-error :result="lv.stateProvince"></validation-error>
+        <label for="postalCode">Postal Code</label>
+        <input
+          id="postalCode"
+          type="text"
+          v-model="location.postalCode"
+          placeholder="30303"
+          v-valid="lv.postalCode"
+        />
+        <validation-error :result="lv.postalCode"></validation-error>
+        <label for="country">Country</label>
+        <input
+          id="country"
+          type="text"
+          v-model="location.country"
+          placeholder="USA"
+          v-valid="lv.country"
+        />
+        <validation-error :result="lv.country"></validation-error>
         <div>
           <input
             type="submit"
@@ -124,7 +182,7 @@ export default defineComponent({
             value="Save"
           />
           <router-link
-            :to="{ name: 'workers' }"
+            :to="{ name: 'customers' }"
             class="button bg-gray-500 hover:bg-gray-700"
             >Cancel</router-link
           >

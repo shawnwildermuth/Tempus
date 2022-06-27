@@ -8,7 +8,7 @@ import App from './App.vue'
 import router from "./router";
 import createIcons from "./fa";
 import { createPinia  } from "pinia";
-
+import Tempus from "./plugins/Tempus";
 import Toast from "vue-toastification";
 import toastOptions from './toastOptions';
 import VueUniversalModal from 'vue-universal-modal'
@@ -20,6 +20,7 @@ createApp(App)
   .use(createPinia ())
   .use(Toast, toastOptions)
   .use(VueUniversalModal, { teleportTarget: "#modals"})
+  .use(Tempus)
   .component("fa", createIcons())
   .component("confirm-dialog", ConfirmDialog)
   .mount('#app');
