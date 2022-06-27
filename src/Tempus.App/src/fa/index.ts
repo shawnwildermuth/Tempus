@@ -5,7 +5,8 @@ import * as brands from '@fortawesome/free-brands-svg-icons'
 
 export default function (): typeof FontAwesomeIcon  {
   /* add icons to the library */
-  library.add(solid.faClock, solid.faStopwatch, solid.faSpinner);
+  library.add(solid.faClock, solid.faStopwatch, solid.faSpinner, 
+              solid.faEye, solid.faXmark, solid.faPencil, solid.faCirclePlus);
   library.add(brands.faTwitter, brands.faTiktok, brands.faYoutube);
   return FontAwesomeIcon;
 }

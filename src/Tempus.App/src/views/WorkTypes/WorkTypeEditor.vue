@@ -93,15 +93,15 @@ export default defineComponent({
         />
         <validation-error :result="v.defaultRate"></validation-error>
         <div>
-          <input
+          <button
             type="submit"
             class="button bg-green-500 hover:bg-green-700 mr-2"
-            value="Save"
-          />
+            
+          ><fa icon="fa-solid fa-xmark"></fa> Save</button>
           <router-link
             :to="{ name: 'worktypes' }"
             class="button bg-gray-500 hover:bg-gray-700"
-            >Cancel</router-link
+            ><fa icon="fa-solid fa-xmark"></fa> Cancel</router-link
           >
         </div>
       </div>

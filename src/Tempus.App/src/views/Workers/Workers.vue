@@ -71,10 +71,10 @@ export default defineComponent({
             <router-link
               class="button text-xs mx-1"
               :to="{ name: 'workerEditor', params: { id: w.id } }"
-              >Edit</router-link
+              ><fa icon="fa-solid fa-pencil"></fa> Edit</router-link
             >
             <button class="button text-xs mx-1" @click="onDelete(w.id)">
-              Delete
+              <fa icon="fa-solid fa-xmark"></fa> Delete
             </button>
           </td>
         </tr>
@@ -82,7 +82,7 @@ export default defineComponent({
       <router-link
         :to="{ name: 'workerEditor', params: { id: 'new' } }"
         class="button"
-        >Add New</router-link
+        ><fa icon="fa-solid fa-circle-plus " />  Add New</router-link
       >
     </div>
     <div class="md:w-1/3">

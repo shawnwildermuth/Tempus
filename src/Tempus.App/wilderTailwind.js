@@ -11,18 +11,18 @@ module.exports = plugin(function ({ addBase, theme, addComponents }) {
     addComponents({
       ".button": {
         borderWidth: theme("borderWidth.DEFAULT"),
-        borderColor: theme("colors.slate.800"),
+        borderColor: theme("colors.gray.900"),
         borderRadius: theme("borderRadius.DEFAULT"),
         padding: theme("spacing.2"),
         marginTop: theme("spacing.1"),
         marginBottom: theme("spacing.1"),
-        backgroundColor: theme("colors.slate.500"),
+        backgroundColor: theme("colors.orange.700"),
         color: theme("colors.white"),
         fontWeight: "bold",
         display: "inline-block",
       },
       ".button:hover": {
-        backgroundColor: theme("colors.slate.700"),
+        backgroundColor: theme("colors.orange.900"),
       },
     });
 });

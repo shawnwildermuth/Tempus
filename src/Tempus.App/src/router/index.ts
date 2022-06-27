@@ -2,9 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import HomeVue from "../views/Home.vue";
 
-import customerRoutes from "../views/Customers/routes";
+import { customersRoutes, customerRoutes } from "../views/Customers/routes";
 import workerRoutes from "../views/Workers/routes";
 import workTypeRoutes from "../views/WorkTypes/routes";
+
+import { useStore } from "../store";
 
 const routes = [
   {
@@ -14,7 +16,8 @@ const routes = [
   },
   workerRoutes,
   workTypeRoutes,
-  customerRoutes
+  customerRoutes,
+  customersRoutes
 ];
 
 const router = createRouter({

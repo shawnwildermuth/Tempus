@@ -1,12 +1,24 @@
 <script lang="ts">
 import { defineComponent, watch, watchEffect } from "vue";
 import { useRootStore } from "./store";
+import router from "./router";
 
 export default defineComponent({
   setup() {
     const store = useRootStore();
+
+    function is(url: string) {
+      const current = router.currentRoute.value.path;
+      let till = current.indexOf("/", 1);
+      if (till === -1) till = current.length;
+      const start = current.slice(0, till);
+      console.log(`${start} - ${till} - ${current} - ${(url === start)}`);
+      return (url === start);
+    }
+
     return {
       store,
+      is
     };
   },
 });
@@ -15,16 +27,16 @@ export default defineComponent({
 <template>
   <div class="container mx-auto bg-slate-100">
     <header class="flex justify-between text-orange-300 p-1 bg-slate-800">
-      <router-link to="/" class="self-center"
+      <router-link to="/" class="self-center text-yellow-500 hover:no-underline"
         ><div class="text-2xl font-bold">
           <fa icon="fa-solid fa-stopwatch"></fa> Tempus
         </div>
       </router-link>
       <div class="flex justify-end p-2">
-        <router-link to="/" class="menu active">Home</router-link>
-        <router-link to="/customers" class="menu">Customers</router-link>
-        <router-link to="/workers" class="menu">Workers</router-link>
-        <router-link to="/worktypes" class="menu">Work Types</router-link>
+        <router-link to="/" class="menu" :class="{active: is('/')}">Home</router-link>
+        <router-link to="/customers" class="menu" :class="{active: is('/customers')}">Customers</router-link>
+        <router-link to="/workers" class="menu" :class="{active: is('/workers')}">Workers</router-link>
+        <router-link to="/worktypes" class="menu" :class="{active: is('/worktypes')}">Work Types</router-link>
       </div>
     </header>
     <section class="min-h-screen">

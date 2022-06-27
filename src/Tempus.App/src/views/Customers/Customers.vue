@@ -55,7 +55,9 @@ export default defineComponent({
       <table class="table-auto border-slate-300">
         <thead class="bg-sky-800 text-white">
           <th>Name</th>
-          <th class="hidden lg:table-cell">Rate</th>
+          <th class="hidden lg:table-cell">Phone</th>
+          <th class="hidden lg:table-cell">City</th>
+          <th class="hidden lg:table-cell">State</th>
           <td></td>
         </thead>
         <tr
@@ -63,16 +65,18 @@ export default defineComponent({
           :key="c.id"
           class="hover:bg-sky-100 p-1 cursor-pointer"
         >
-          <td @click="showDetails(c.id)">{{ c.companyName }}</td>
-          <td class="hidden lg:table-cell" @click="showDetails(c.id)">{{ c.companyPhone }}</td>
+          <td>{{ c.companyName }}</td>
+          <td class="hidden lg:table-cell"><a :href="`tel:${c.companyPhone}`">{{ c.companyPhone }}</a></td>
+          <td class="hidden lg:table-cell">{{ c.location.city }}</td>
+          <td class="hidden lg:table-cell">{{ c.location.stateProvince }}</td>
           <td class="text-right">
             <router-link
-              class="button text-xs mx-1"
-              :to="{ name: 'customerEditor', params: { id: c.id } }"
-              >Edit</router-link
+              class="button text-xs mx-1 button-success"
+              :to="{ name: 'customer', params: { id: c.id } }"
+              ><fa icon="fa-solid fa-eye" /> View</router-link
             >
             <button class="button text-xs mx-1" @click="onDelete(c.id)">
-              Delete
+              <fa icon="fa-solid fa-xmark"></fa> Delete
             </button>
           </td>
         </tr>
@@ -80,11 +84,8 @@ export default defineComponent({
       <router-link
         :to="{ name: 'customerEditor', params: { id: 'new' } }"
         class="button"
-        >Add New</router-link
+        ><fa icon="fa-solid fa-circle-plus " /> Add New</router-link
       >
-    </div>
-    <div class="md:w-1/3">
-      <router-view></router-view>
     </div>
   </div>
 </template>

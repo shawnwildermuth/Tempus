@@ -184,7 +184,7 @@ export default defineComponent({
           <router-link
             :to="{ name: 'customers' }"
             class="button bg-gray-500 hover:bg-gray-700"
-            >Cancel</router-link
+            ><fa icon="fa-solid fa-xmark"></fa> Cancel</router-link
           >
         </div>
       </div>

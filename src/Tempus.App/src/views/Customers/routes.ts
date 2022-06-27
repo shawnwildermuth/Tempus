@@ -1,23 +1,22 @@
 import CustomersVue from "./Customers.vue";
 import CustomerEditorVue from "./CustomerEditor.vue";
-import CustomerDetailsVue from "./CustomerDetails.vue";
+import CustomerVue from "./Customer.vue";
 
-export default {
+export const customersRoutes = {
   name: "customers",
   path: "/customers",
   component: CustomersVue,
+};
+export const customerRoutes = {
+  name: "customer",
+  path: "/customers/:id",
+  component: CustomerVue,
   children: [
     {
       name: "customerEditor",
-      path: "editor/:id",
+      path: "editor",
       component: CustomerEditorVue,
-      props: true 
-    },
-    {
-      name: "customerDetails",
-      path: "details/:id",
-      component: CustomerDetailsVue,
-      props: true 
+      props: true,
     },
   ],
 };

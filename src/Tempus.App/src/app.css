@@ -7,7 +7,7 @@
     @apply font-bold;
   }
 
-  a {
+  section a:not(.button) {
     @apply text-orange-800 hover:underline;
   }
 
