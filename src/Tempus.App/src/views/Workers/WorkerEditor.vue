@@ -78,6 +78,7 @@ export default defineComponent({
           id="userName"
           v-model="worker.userName"
           placeholder="e.g. bobsmith"
+          v-valid="v.userName"
         />
         <validation-error :result="v.userName"></validation-error>
         <label for="firstName">First Name</label>
@@ -85,6 +86,7 @@ export default defineComponent({
           id="firstName"
           v-model="worker.firstName"
           placeholder="e.g. Bob"
+          v-valid="v.firstName"
         />
         <validation-error :result="v.firstName"></validation-error>
         <label for="lastName">Last Name</label>
@@ -92,6 +94,7 @@ export default defineComponent({
           id="lastName"
           v-model="worker.lastName"
           placeholder="e.g. Smith"
+          v-valid="v.lastName"
         />
         <validation-error :result="v.lastName"></validation-error>
         <label for="email">Email</label>
@@ -100,6 +103,7 @@ export default defineComponent({
           type="email"
           v-model="worker.email"
           placeholder="e.g. bob.smith@aol.com"
+          v-valid="v.email"
         />
         <validation-error :result="v.email"></validation-error>
         <label for="baseRate">Base Rate ($/hr)</label>
@@ -107,6 +111,7 @@ export default defineComponent({
           id="baseRate"
           v-model="worker.baseRate"
           placeholder="e.g. 100.00"
+          v-valid="v.baseRate"
         />
         <validation-error :result="v.baseRate"></validation-error>
         <label for="phone">Phone</label>
@@ -115,6 +120,7 @@ export default defineComponent({
           type="phone"
           v-model="worker.phone"
           placeholder="e.g. (404) 555-1212"
+          v-valid="v.phone"
         />
         <validation-error :result="v.phone"></validation-error>
         <div>
