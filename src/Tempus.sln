@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{9845221D-73E6-46
 		..\.gitignore = ..\.gitignore
 		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 		global.json = global.json
+		regenerateDbs.ps1 = regenerateDbs.ps1
 		tye.yaml = tye.yaml
 	EndProjectSection
 EndProject
