@@ -6,7 +6,8 @@ declare global {
     replaceEntityInArray(item: IEntity) : void;
     removeEntityFromArray(item: IEntity) : void;
   }
-}
+ }
+
 
 Array.prototype.replaceEntities = function<T>(collection: Array<T>) {
   this.splice(0, this.length, ...collection);

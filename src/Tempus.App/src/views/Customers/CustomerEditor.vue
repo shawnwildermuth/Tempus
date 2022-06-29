@@ -1,4 +1,3 @@
-useWorkerStore
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from "vue";
 import { ContactEntity, CustomerEntity } from "../../models";

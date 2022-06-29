@@ -12,7 +12,6 @@ export default defineComponent({
       let till = current.indexOf("/", 1);
       if (till === -1) till = current.length;
       const start = current.slice(0, till);
-      console.log(`${start} - ${till} - ${current} - ${(url === start)}`);
       return (url === start);
     }
 

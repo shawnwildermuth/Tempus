@@ -3,7 +3,7 @@ import { CustomerEntity, LocationEntity, ContactEntity } from "../models";
 import { useRootStore } from ".";
 import http from "../services/http";
 import { defineStore } from "pinia";
-import "../extensions";
+import "@/extensions";
 
 let loaded = false;
 
@@ -38,6 +38,15 @@ export default defineStore("customers", {
       }
       rootStore.setError("Failed to load customers...");
       return false;
+    },
+    async saveContact(customer: CustomerEntity, contact: ContactEntity): Promise<Boolean> {
+      if (contact.id === 0) {
+        // New
+        customer.contacts.push(contact);
+      } else {
+        customer.contacts.replaceEntityInArray(contact);
+      }
+      return await this.saveCustomer(customer);
     },
     async saveCustomer(customer: CustomerEntity): Promise<Boolean> {
       const rootStore = useRootStore();
