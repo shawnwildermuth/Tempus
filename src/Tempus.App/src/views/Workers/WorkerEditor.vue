@@ -41,8 +41,8 @@ export default defineComponent({
       const id = Number(props.id);
       if (isNaN(id)) {
         if (props.id !== "new") {
-          const toast = useToast();
-          toast.error("Bad ID for Worker");
+          
+          rootStore.showError("Bad ID for Worker");
           router.push({ name: "workers" });
         }
       } else {

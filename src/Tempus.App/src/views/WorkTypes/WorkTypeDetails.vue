@@ -13,7 +13,7 @@ export default defineComponent({
     const worker = ref({} as WorkerEntity);
     const route = useRoute();
     const store = useWorkerStore();
-    const toast = useToast();
+    
 
     // watch for the property change
     watch(
@@ -32,7 +32,7 @@ export default defineComponent({
         if (found) worker.value = found;
         return;
       }
-      toast.error("Bad id for worker");
+      rootStore.showError("Bad id for worker");
       router.back();
     }
 

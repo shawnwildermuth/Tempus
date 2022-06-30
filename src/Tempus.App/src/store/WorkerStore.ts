@@ -36,7 +36,7 @@ export default defineStore("workers", {
       } finally {
         rootStore.clearBusy();
       }
-      rootStore.setError("Failed to load workers...");
+      rootStore.showError("Failed to load workers...");
       return false;
     },
     async saveWorker(worker: WorkerEntity) : Promise<boolean> {
@@ -47,12 +47,12 @@ export default defineStore("workers", {
           // Create new
           const result = await http.post<WorkerEntity>("workers", worker);
           if (result) {
-            const toast = useToast();
-            toast("Saved...")
+            
+            rootStore.showMessage("Saved...")
             this.workers.push(result);
             return true;
           } else {
-            rootStore.setError("Failed to save worker");
+            rootStore.showError("Failed to save worker");
           }
         } else {
           // Update
@@ -61,13 +61,13 @@ export default defineStore("workers", {
             worker
           );
           if (result) {
-            const toast = useToast();
-            toast("Saved...")
+            
+            rootStore.showMessage("Saved...")
             this.workers.replaceEntityInArray(result);
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to save worker...");
+        rootStore.showError("Failed to save worker...");
       } finally {
         rootStore.clearBusy();
       }
@@ -84,15 +84,15 @@ export default defineStore("workers", {
           const result = await http.delete<WorkerEntity>(`workers/${worker.id}`);
           if (result) {
             this.workers.removeEntityFromArray(worker);
-            const toast = useToast();
-            toast("Deleted...")
+            
+            rootStore.showMessage("Deleted...")
             return true;
           } else {
-            rootStore.setError("Failed to delete worker");
+            rootStore.showError("Failed to delete worker");
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to delete worker...");
+        rootStore.showError("Failed to delete worker...");
       } finally {
         rootStore.clearBusy();
       }

@@ -3,6 +3,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useCustomerStore } from "../../store";
 import { toMoney } from "../../filters";
 import router from "../../router";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   setup() {
@@ -10,8 +11,9 @@ export default defineComponent({
     const showConfirm = ref(false);
     let toBeDeleted = -1;
 
-    onMounted(async () => {
+onMounted(async () => {
       await store.loadCustomers();
+
     });
 
     function showDetails(id: number) {

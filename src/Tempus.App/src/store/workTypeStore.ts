@@ -36,7 +36,7 @@ export default defineStore("workTypes", {
       } finally {
         rootStore.clearBusy();
       }
-      rootStore.setError("Failed to load work types...");
+      rootStore.showError("Failed to load work types...");
       return false;
     },
     async saveWorkType(worker: WorkTypeEntity): Promise<Boolean> {
@@ -47,12 +47,12 @@ export default defineStore("workTypes", {
           // Create new
           const result = await http.post<WorkTypeEntity>("worktypes", worker);
           if (result) {
-            const toast = useToast();
+            
             toast("Saved...")
             this.workTypes.push(result);
             return true;
           } else {
-            rootStore.setError("Failed to save work type");
+            rootStore.showError("Failed to save work type");
           }
         } else {
           // Update
@@ -61,14 +61,14 @@ export default defineStore("workTypes", {
             worker
           );
           if (result) {
-            const toast = useToast();
+            const toast = userootStore.showMessage();
             toast("Saved...")
             this.workTypes.replaceEntityInArray(result);
             return true;
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to save work type...");
+        rootStore.showError("Failed to save work type...");
       } finally {
         rootStore.clearBusy();
       }
@@ -87,14 +87,14 @@ export default defineStore("workTypes", {
           const result = await http.delete<WorkTypeEntity>(`worktypes/${worker.id}`);
           if (result) {
             this.workTypes.removeEntityFromArray(worker);
-            const toast = useToast();
+            const toast = userootStore.showMessage();
             toast("Deleted...")
           } else {
-            rootStore.setError("Failed to delete work type");
+            rootStore.showError("Failed to delete work type");
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to delete worktype...");
+        rootStore.showError("Failed to delete worktype...");
       } finally {
         rootStore.clearBusy();
       }

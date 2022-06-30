@@ -2,8 +2,9 @@ import { useToast } from 'vue-toastification';
 import { CustomerEntity, LocationEntity, ContactEntity } from "../models";
 import { useRootStore } from ".";
 import http from "../services/http";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import "@/extensions";
+import { mapToIEntity } from '../utils';
 
 let loaded = false;
 
@@ -11,11 +12,13 @@ export default defineStore("customers", {
   state: () => ({
     customers: [] as Array<CustomerEntity>,
   }),
-  getters: {},
+  getters: {
+  },
   actions: {
     async findCustomer(id: Number): Promise<CustomerEntity | undefined> {
       if (await this.loadCustomers()) {
-        return this.customers.find((w) => w.id === id);
+        const found = this.customers.find((w) => w.id === id);
+        return found;
       } else return undefined;
     },
     async loadCustomers(): Promise<Boolean> {
@@ -25,6 +28,7 @@ export default defineStore("customers", {
       // Load the data
       const rootStore = useRootStore();
       try {
+        const rootStore = useRootStore();
         rootStore.setBusy();
         const results = await http.get<Array<CustomerEntity>>("customers");
         if (results) {
@@ -33,10 +37,11 @@ export default defineStore("customers", {
           return true;
         }
       } catch {
+        // NOOP
       } finally {
         rootStore.clearBusy();
       }
-      rootStore.setError("Failed to load customers...");
+      rootStore.showError("Failed to load customers...");
       return false;
     },
     async saveContact(customer: CustomerEntity, contact: ContactEntity): Promise<Boolean> {
@@ -56,12 +61,11 @@ export default defineStore("customers", {
           // Create new
           const result = await http.post<CustomerEntity>("customers", customer);
           if (result) {
-            const toast = useToast();
-            toast("Saved...")
+            rootStore.showMessage("Saved...")
             this.customers.push(result);
             return true;
           } else {
-            rootStore.setError("Failed to save customer");
+            rootStore.showError("Failed to save customer");
           }
         } else {
           // Update
@@ -70,14 +74,14 @@ export default defineStore("customers", {
             customer
           );
           if (result) {
-            const toast = useToast();
-            toast("Saved...")
-            this.customers.replaceEntityInArray(result);
-            return true;
+            rootStore.showMessage("Saved...")
+            const customer = this.customers.find(s => s.id == result.id);
+            mapToIEntity(result, customer)
+              return true;
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to save customer...");
+        rootStore.showError("Failed to save customer...");
       } finally {
         rootStore.clearBusy();
       }
@@ -96,14 +100,14 @@ export default defineStore("customers", {
           const result = await http.delete<CustomerEntity>(`customers/${customer.id}`);
           if (result) {
             this.customers.removeEntityFromArray(customer);
-            const toast = useToast();
-            toast("Deleted...")
+            
+            rootStore.showMessage("Deleted...")
           } else {
-            rootStore.setError("Failed to delete customer");
+            rootStore.showError("Failed to delete customer");
           }
         }
       } catch (e) {
-        rootStore.setError("Failed to delete customers...");
+        rootStore.showError("Failed to delete customers...");
       } finally {
         rootStore.clearBusy();
       }

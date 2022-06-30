@@ -1,10 +1,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { CustomerEntity } from "../../models";
-import { useCustomerStore } from "../../store";
-import { useRoute } from "vue-router";
+import { useCustomerStore, useRootStore } from "../../store";
 import router from "../../router";
-import { useToast } from "vue-toastification";
 import { toAddressBlock, toMoney } from "../../filters";
 
 export default defineComponent({
@@ -12,7 +10,7 @@ export default defineComponent({
   setup(props) {
     const customer = ref({} as CustomerEntity);
     const store = useCustomerStore();
-    const toast = useToast();
+    const rootStore = useRootStore();
 
     // watch for the property change
     watch(
@@ -31,7 +29,7 @@ export default defineComponent({
         if (found) customer.value = found;
         return;
       } else {
-        toast.error("Bad id for worker");
+        rootStore.showError("Bad id for worker");
         router.back();
       }
     }

@@ -1,12 +1,11 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted, reactive } from "vue";
+import { defineComponent, ref, onMounted, reactive, onUpdated } from "vue";
 import { ContactEntity, CustomerEntity } from "../../models";
-import { useCustomerStore } from "../../store";
+import { useCustomerStore, useRootStore } from "../../store";
 import router from "../../router";
 import useValidate from "@vuelidate/core";
 import { email, minLength, numeric, required } from "@vuelidate/validators";
 import ValidationError from "../../components/validation-error.vue";
-import { useToast } from "vue-toastification";
 import { phone } from "../../validators";
 import { clone } from "@/utils";
 
@@ -15,7 +14,7 @@ export default defineComponent({
     ValidationError,
   },
   props: ["id", "contactId"],
-  setup(props) {
+  setup(props, { emit }) {
     const contact = ref({
       id: 0,
       firstName: "",
@@ -26,8 +25,9 @@ export default defineComponent({
     } as ContactEntity);
 
     const customer = ref(null as CustomerEntity | null);
+    const rootStore = useRootStore();
+
     const store = useCustomerStore();
-    const toast = useToast();
 
     const rules = {
       id: {},
@@ -60,10 +60,10 @@ export default defineComponent({
           }
         }
       } else {
-        toast.error("Bad Customer Number");
+        rootStore.showError("Bad Customer Number");
         return;
       }
-      toast.error("Bad Contact ID");
+      rootStore.showError("Bad Contact ID");
       router.push({ name: "customer", params: { id: props.id } });
     });
 
@@ -74,7 +74,6 @@ export default defineComponent({
         const forSave = customer.value;
         if (await store.saveContact(forSave, contact.value)) {
           router.push({ name: "customer", params: { id: props.id } });
-          toast("Saved Contact...");
         }
       }
     }

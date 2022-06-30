@@ -1,12 +1,11 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import { WorkTypeEntity } from "../../models";
-import { useWorkTypeStore } from "../../store";
+import { useWorkTypeStore, useRootStore } from "../../store";
 import router from "../../router";
 import useValidate from "@vuelidate/core";
 import { email, minLength, numeric, required } from "@vuelidate/validators";
 import ValidationError from "../../components/validation-error.vue";
-import { useToast } from "vue-toastification";
 
 export default defineComponent({
   components: {
@@ -22,7 +21,8 @@ export default defineComponent({
     } as WorkTypeEntity);
 
     const store = useWorkTypeStore();
-
+    const rootStore = useRootStore();
+    
     const rules = {
       name: { required, minLength: minLength(5) },
       description: {},
@@ -35,8 +35,8 @@ export default defineComponent({
       const id = Number(props.id);
       if (isNaN(id)) {
         if (props.id !== "new") {
-          const toast = useToast();
-          toast.error("Bad ID for Work Type");
+          
+          rootStore.showError("Bad ID for Work Type");
           router.push({ name: "worktypes" });
         }
       } else {

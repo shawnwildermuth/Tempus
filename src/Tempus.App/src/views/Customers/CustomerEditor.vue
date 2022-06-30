@@ -1,12 +1,11 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from "vue";
 import { ContactEntity, CustomerEntity } from "../../models";
-import { useCustomerStore } from "../../store";
+import { useCustomerStore, useRootStore } from "../../store";
 import router from "../../router";
 import useValidate from "@vuelidate/core";
-import { email, minLength, numeric, required } from "@vuelidate/validators";
+import { minLength, required } from "@vuelidate/validators";
 import ValidationError from "../../components/validation-error.vue";
-import { useToast } from "vue-toastification";
 import { phone } from "../../validators";
 
 export default defineComponent({
@@ -27,13 +26,14 @@ export default defineComponent({
         city: "",
         stateProvince: "",
         postalCode: "",
-        country: null
+        country: null,
       },
       contacts: new Array<ContactEntity>(),
     } as CustomerEntity);
 
     const location = ref(customer.value.location);
 
+    const rootStore = useRootStore();
     const store = useCustomerStore();
 
     const rules = {
@@ -60,15 +60,14 @@ export default defineComponent({
       const id = Number(props.id);
       if (isNaN(id)) {
         if (props.id !== "new") {
-          const toast = useToast();
-          toast.error("Bad Customer");
+          rootStore.showError("Bad Customer");
           router.push({ name: "customers" });
         }
       } else {
         const foundWorker = await store.findCustomer(id);
         if (foundWorker) {
-         customer.value = foundWorker;
-         location.value = foundWorker.location;
+          customer.value = foundWorker;
+          location.value = foundWorker.location;
         }
       }
     });
@@ -90,7 +89,7 @@ export default defineComponent({
       location,
       save,
       v,
-      lv
+      lv,
     };
   },
 });

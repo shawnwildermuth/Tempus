@@ -17,7 +17,7 @@ import ConfirmDialog from "./components/confirm-dialog.vue";
 
 createApp(App)
   .use(router)
-  .use(createPinia ())
+  .use(createPinia())
   .use(Toast, toastOptions)
   .use(VueUniversalModal, { teleportTarget: "#modals"})
   .use(Tempus)
